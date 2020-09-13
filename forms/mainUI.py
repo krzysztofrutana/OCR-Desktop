@@ -3,16 +3,13 @@
 ################################################################################
 ## Form generated from reading UI file 'mainUI.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.0
+## Created by: Qt User Interface Compiler version 5.15.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
-    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
-    QPixmap, QRadialGradient)
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 
@@ -20,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 599)
+        MainWindow.resize(845, 698)
         self.actionZamknij = QAction(MainWindow)
         self.actionZamknij.setObjectName(u"actionZamknij")
         self.centralwidget = QWidget(MainWindow)
@@ -52,16 +49,38 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.pushButtonChooseFIles)
 
-        self.pushButtonLoadFiles = QPushButton(self.centralwidget)
-        self.pushButtonLoadFiles.setObjectName(u"pushButtonLoadFiles")
-
-        self.verticalLayout.addWidget(self.pushButtonLoadFiles)
-
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
 
         self.verticalLayout_4.addLayout(self.horizontalLayout)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_4.addItem(self.verticalSpacer_2)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_4)
+
+        self.label_3 = QLabel(self.centralwidget)
+        self.label_3.setObjectName(u"label_3")
+
+        self.horizontalLayout_6.addWidget(self.label_3)
+
+        self.comboBoxLanguage = QComboBox(self.centralwidget)
+        self.comboBoxLanguage.setObjectName(u"comboBoxLanguage")
+
+        self.horizontalLayout_6.addWidget(self.comboBoxLanguage)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout_6)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -182,7 +201,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 800, 20))
+        self.menubar.setGeometry(QRect(0, 0, 845, 21))
         self.menuPlik = QMenu(self.menubar)
         self.menuPlik.setObjectName(u"menuPlik")
         MainWindow.setMenuBar(self.menubar)
@@ -202,7 +221,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"OCR-KR", None))
         self.actionZamknij.setText(QCoreApplication.translate("MainWindow", u"Zamknij", None))
         self.pushButtonChooseFIles.setText(QCoreApplication.translate("MainWindow", u"Wybierz plik", None))
-        self.pushButtonLoadFiles.setText(QCoreApplication.translate("MainWindow", u"Za\u0142aduj plik", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"J\u0119zyk tekstu:", None))
         self.pushButtonRecognizeAll.setText(QCoreApplication.translate("MainWindow", u"Rozpoznaj wszystkie pliki", None))
         self.pushButtonRecognizeCurrent.setText(QCoreApplication.translate("MainWindow", u"Rozpoznaj bierz\u0105cy", None))
         self.preview.setText("")
