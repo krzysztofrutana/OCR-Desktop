@@ -21,6 +21,7 @@ class MainWindow(QMainWindow):
     def openFileDialog(self):
 
         self.ui.plainTextEditFilePath.clear()
+        self.ui.plainTextEditOutput.clear()
 
         self.dialog = QFileDialog.getOpenFileNames(self,"/home",
                                         )
@@ -56,17 +57,31 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEditOutput.clear()
         for i in range(0,len(self.listOfElementsToRecognizeImage)):
             image = Image.open(self.listOfElementsToRecognizeStr[i])
-            self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image))
+            self.ui.plainTextEditOutput.appendPlainText("Grafika " + str(i+1))
+            if self.ui.comboBoxLanguage.currentText() == 'PL':
+                self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
+            elif self.ui.comboBoxLanguage.currentText() == 'EN':
+                self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='eng'))
 
     def recognizeCurrent(self):
         self.ui.plainTextEditOutput.clear()
         image = Image.open(self.listOfElementsToRecognizeStr[self.whichImage])
-        self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image))
+        self.ui.plainTextEditOutput.appendPlainText("Grafika " + str(self.whichImage + 1))
+        if self.ui.comboBoxLanguage.currentText() == 'PL':
+            self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
+        elif self.ui.comboBoxLanguage.currentText() == 'EN':
+            self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='eng'))
 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        languages = ['PL', 'EN']
+        self.ui.comboBoxLanguage.addItems(languages)
+        self.ui.comboBoxLanguage.setCurrentIndex(0)
+
+
 
         self.ui.pushButtonChooseFIles.clicked.connect(lambda : self.openFileDialog())
         self.ui.pushButtonLoadFiles.clicked.connect(lambda: self.loadFiles())
