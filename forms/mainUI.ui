@@ -53,13 +53,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QPushButton" name="pushButtonLoadFiles">
-                  <property name="text">
-                   <string>Załaduj plik</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </item>
              </layout>

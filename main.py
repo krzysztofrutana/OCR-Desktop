@@ -1,6 +1,7 @@
 
 import sys
 
+from PySide2 import QtGui
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from forms.mainUI import Ui_MainWindow
@@ -30,7 +31,6 @@ class MainWindow(QMainWindow):
             self.listOfElementsToRecognizeStr.append(str(self.dialog[0][i]))
             self.listOfElementsToRecognizeImage.append(QPixmap(str(self.dialog[0][i])))
 
-    def loadFiles(self):
         self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[0])
         self.ui.preview.setScaledContents(True)
         self.whichImage = 0
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEditOutput.clear()
         for i in range(0,len(self.listOfElementsToRecognizeImage)):
             image = Image.open(self.listOfElementsToRecognizeStr[i])
-            self.ui.plainTextEditOutput.appendPlainText("Grafika " + str(i+1))
+            self.ui.plainTextEditOutput.appendPlainText("---------Grafika " + str(i+1)+"---------")
             if self.ui.comboBoxLanguage.currentText() == 'PL':
                 self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
             elif self.ui.comboBoxLanguage.currentText() == 'EN':
@@ -66,11 +66,21 @@ class MainWindow(QMainWindow):
     def recognizeCurrent(self):
         self.ui.plainTextEditOutput.clear()
         image = Image.open(self.listOfElementsToRecognizeStr[self.whichImage])
-        self.ui.plainTextEditOutput.appendPlainText("Grafika " + str(self.whichImage + 1))
+        self.ui.plainTextEditOutput.appendPlainText("---------Grafika " + str(self.whichImage + 1)+"---------")
         if self.ui.comboBoxLanguage.currentText() == 'PL':
             self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
         elif self.ui.comboBoxLanguage.currentText() == 'EN':
             self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='eng'))
+
+    def saveOutput(self):
+        if self.ui.comboBoxOutputTarget.currentText() == 'txt':
+            name, filter = QFileDialog.getSaveFileName(self, 'Zapisz plik',"", "Text files (*.txt)")
+            if not name:
+                return
+            file = open(name, 'w')
+            output = self.ui.plainTextEditOutput.toPlainText()
+            file.write(output)
+            file.close()
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -81,14 +91,16 @@ class MainWindow(QMainWindow):
         self.ui.comboBoxLanguage.addItems(languages)
         self.ui.comboBoxLanguage.setCurrentIndex(0)
 
-
+        saveSupportedFormat = ['txt']
+        self.ui.comboBoxOutputTarget.addItems(saveSupportedFormat)
+        self.ui.comboBoxOutputTarget.setCurrentIndex(0)
 
         self.ui.pushButtonChooseFIles.clicked.connect(lambda : self.openFileDialog())
-        self.ui.pushButtonLoadFiles.clicked.connect(lambda: self.loadFiles())
         self.ui.pushButtonPreviewLeft.clicked.connect(lambda : self.previousImage())
         self.ui.pushButtonPreviewRight.clicked.connect(lambda : self.nextImage())
         self.ui.pushButtonRecognizeAll.clicked.connect(lambda : self.recognizeAll())
         self.ui.pushButtonRecognizeCurrent.clicked.connect(lambda : self.recognizeCurrent())
+        self.ui.pushButtonSave.clicked.connect(lambda : self.saveOutput())
 
 
 

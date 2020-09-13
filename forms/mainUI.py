@@ -49,11 +49,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.pushButtonChooseFIles)
 
-        self.pushButtonLoadFiles = QPushButton(self.centralwidget)
-        self.pushButtonLoadFiles.setObjectName(u"pushButtonLoadFiles")
-
-        self.verticalLayout.addWidget(self.pushButtonLoadFiles)
-
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
@@ -226,7 +221,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"OCR-KR", None))
         self.actionZamknij.setText(QCoreApplication.translate("MainWindow", u"Zamknij", None))
         self.pushButtonChooseFIles.setText(QCoreApplication.translate("MainWindow", u"Wybierz plik", None))
-        self.pushButtonLoadFiles.setText(QCoreApplication.translate("MainWindow", u"Za\u0142aduj plik", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"J\u0119zyk tekstu:", None))
         self.pushButtonRecognizeAll.setText(QCoreApplication.translate("MainWindow", u"Rozpoznaj wszystkie pliki", None))
         self.pushButtonRecognizeCurrent.setText(QCoreApplication.translate("MainWindow", u"Rozpoznaj bierz\u0105cy", None))
