@@ -1,106 +1,90 @@
+################################################################################
+##
+## BY: Krzysztof Rutana
+## PROJECT MADE WITH: Qt Designer and PySide2
+## CREDITS: WANDERSON M.PIMENTA
+##
+## Many elements of this design have been borrowed from the WANDERSON M.PIMENTA
+## project: structure (not all), method to handle events and resize windows etc.
+## The rest of the functionality was created by me. This project can be used
+## freely for all uses, as long as they maintain the respective credits only in
+## the Python scripts.
+##
+################################################################################
 
 import sys
 
-from PySide2 import QtGui
-from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
-from forms.mainUI import Ui_MainWindow
+from PySide2.QtCore import Qt
+
+from app_modules import *
+
 try:
     from PIL import Image
 except ImportError:
     import Image
-import pytesseract
 
 class MainWindow(QMainWindow):
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
+    #image storage list
+    listOfElementsToRecognize = []
 
-    listOfElementsToRecognizeStr= []
-    listOfElementsToRecognizeImage = []
+    #element number which is currently previewed
     whichImage = 0
 
-    def openFileDialog(self):
 
-        self.ui.plainTextEditFilePath.clear()
-        self.ui.plainTextEditOutput.clear()
+    windowMaximized = False
 
-        self.dialog = QFileDialog.getOpenFileNames(self,"/home",
-                                        )
-        for i in range(0, len(self.dialog[0])):
-            self.ui.plainTextEditFilePath.appendPlainText(str(self.dialog[0][i]) + "\n")
-            self.listOfElementsToRecognizeStr.append(str(self.dialog[0][i]))
-            self.listOfElementsToRecognizeImage.append(QPixmap(str(self.dialog[0][i])))
 
-        self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[0])
-        self.ui.preview.setScaledContents(True)
-        self.whichImage = 0
-
-    def nextImage(self):
-        if len(self.listOfElementsToRecognizeImage) > 1 and self.whichImage >= 0:
-            self.whichImage += 1
-            if self.whichImage == len(self.listOfElementsToRecognizeImage):
-                self.whichImage = 0
-                self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[self.whichImage])
-            else:
-                self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[self.whichImage])
-
-    def previousImage(self):
-        if len(self.listOfElementsToRecognizeImage) > 1 and self.whichImage < len(self.listOfElementsToRecognizeImage):
-            self.whichImage -= 1
-            if self.whichImage < 0:
-                self.whichImage = len(self.listOfElementsToRecognizeImage) -1
-                self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[self.whichImage])
-            else:
-                self.ui.preview.setPixmap(self.listOfElementsToRecognizeImage[self.whichImage])
-
-    def recognizeAll(self):
-        self.ui.plainTextEditOutput.clear()
-        for i in range(0,len(self.listOfElementsToRecognizeImage)):
-            image = Image.open(self.listOfElementsToRecognizeStr[i])
-            self.ui.plainTextEditOutput.appendPlainText("---------Grafika " + str(i+1)+"---------")
-            if self.ui.comboBoxLanguage.currentText() == 'PL':
-                self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
-            elif self.ui.comboBoxLanguage.currentText() == 'EN':
-                self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='eng'))
-
-    def recognizeCurrent(self):
-        self.ui.plainTextEditOutput.clear()
-        image = Image.open(self.listOfElementsToRecognizeStr[self.whichImage])
-        self.ui.plainTextEditOutput.appendPlainText("---------Grafika " + str(self.whichImage + 1)+"---------")
-        if self.ui.comboBoxLanguage.currentText() == 'PL':
-            self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='pol'))
-        elif self.ui.comboBoxLanguage.currentText() == 'EN':
-            self.ui.plainTextEditOutput.appendPlainText(pytesseract.image_to_string(image, lang='eng'))
-
-    def saveOutput(self):
-        if self.ui.comboBoxOutputTarget.currentText() == 'txt':
-            name, filter = QFileDialog.getSaveFileName(self, 'Zapisz plik',"", "Text files (*.txt)")
-            if not name:
-                return
-            file = open(name, 'w')
-            output = self.ui.plainTextEditOutput.toPlainText()
-            file.write(output)
-            file.close()
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        languages = ['PL', 'EN']
-        self.ui.comboBoxLanguage.addItems(languages)
-        self.ui.comboBoxLanguage.setCurrentIndex(0)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.oldPos = self.pos()
 
-        saveSupportedFormat = ['txt']
-        self.ui.comboBoxOutputTarget.addItems(saveSupportedFormat)
-        self.ui.comboBoxOutputTarget.setCurrentIndex(0)
+        self.ui.Pages.setCurrentIndex(0)
 
-        self.ui.pushButtonChooseFIles.clicked.connect(lambda : self.openFileDialog())
-        self.ui.pushButtonPreviewLeft.clicked.connect(lambda : self.previousImage())
-        self.ui.pushButtonPreviewRight.clicked.connect(lambda : self.nextImage())
-        self.ui.pushButtonRecognizeAll.clicked.connect(lambda : self.recognizeAll())
-        self.ui.pushButtonRecognizeCurrent.clicked.connect(lambda : self.recognizeCurrent())
-        self.ui.pushButtonSave.clicked.connect(lambda : self.saveOutput())
+        uiStyle = UiStyle(self)
+        uiStyle.correctingIconsPathAndVisibleSettings()
+
+        uiFunctions = UiFunction(self)
+        uiFunctions.connectionsResizeDragingWindow()
+
+        imageRecognizeFunction = ImageRecognizeFunction(self)
+        imageRecognizeFunction.buttonsConnections()
+
+        pdfRecognizeFunction = PDFRecognizeFunction(self)
+        pdfRecognizeFunction.buttonsConnections()
+
+        # this is WANDERSON M.PIMENTA to maximize windows after duble click on top frame of window
+        # and draging window
+        def dobleClickMaximizeRestore(event):
+                # IF DOUBLE CLICK CHANGE STATUS
+            if event.type() == QtCore.QEvent.MouseButtonDblClick:
+                QtCore.QTimer.singleShot(250, lambda: uiFunctions.maximize())
+
+        self.ui.FrameTop.mouseDoubleClickEvent = dobleClickMaximizeRestore
+
+        def moveWindow(event):
+            # IF MAXIMIZED CHANGE TO NORMAL
+            if self.windowMaximized == True:
+                self.showNormal()
+                self.windowMaximized = False
+
+            # MOVE WINDOW
+            if event.buttons() == Qt.LeftButton:
+                window.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+
+        self.ui.FrameTop.mouseMoveEvent = moveWindow
+
+
+
 
 
 
