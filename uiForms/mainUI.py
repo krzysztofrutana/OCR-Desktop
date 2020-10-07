@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1053, 806)
+        MainWindow.resize(1086, 760)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -289,10 +289,8 @@ class Ui_MainWindow(object):
         self.Pages.setLineWidth(0)
         self.Image = QWidget()
         self.Image.setObjectName(u"Image")
-        self.gridLayout = QGridLayout(self.Image)
-        self.gridLayout.setSpacing(2)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(9, 9, 9, 9)
+        self.verticalLayout_10 = QVBoxLayout(self.Image)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.FrameContentUp = QFrame(self.Image)
         self.FrameContentUp.setObjectName(u"FrameContentUp")
         self.FrameContentUp.setFrameShape(QFrame.NoFrame)
@@ -663,17 +661,17 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.FramePreviewImage)
 
 
-        self.gridLayout.addWidget(self.FrameContentUp, 0, 0, 1, 1)
+        self.verticalLayout_10.addWidget(self.FrameContentUp)
 
-        self.FrameContentDown = QFrame(self.Image)
-        self.FrameContentDown.setObjectName(u"FrameContentDown")
-        self.FrameContentDown.setFrameShape(QFrame.NoFrame)
-        self.FrameContentDown.setFrameShadow(QFrame.Raised)
-        self.FrameContentDown.setLineWidth(0)
-        self.verticalLayout_10 = QVBoxLayout(self.FrameContentDown)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalLayout_10.setContentsMargins(0, 9, 0, 0)
-        self.plainTextEditOutputImage = QPlainTextEdit(self.FrameContentDown)
+        self.frame_6 = QFrame(self.Image)
+        self.frame_6.setObjectName(u"frame_6")
+        self.frame_6.setFrameShape(QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_8 = QVBoxLayout(self.frame_6)
+        self.verticalLayout_8.setSpacing(10)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.plainTextEditOutputImage = QPlainTextEdit(self.frame_6)
         self.plainTextEditOutputImage.setObjectName(u"plainTextEditOutputImage")
         self.plainTextEditOutputImage.setMinimumSize(QSize(400, 100))
         self.plainTextEditOutputImage.setMaximumSize(QSize(16777215, 16666666))
@@ -725,9 +723,60 @@ class Ui_MainWindow(object):
         self.plainTextEditOutputImage.setFrameShape(QFrame.NoFrame)
         self.plainTextEditOutputImage.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
-        self.verticalLayout_10.addWidget(self.plainTextEditOutputImage)
+        self.verticalLayout_8.addWidget(self.plainTextEditOutputImage)
 
-        self.FrameSaveBtn = QFrame(self.FrameContentDown)
+        self.frame = QFrame(self.frame_6)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.NoFrame)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_12 = QHBoxLayout(self.frame)
+        self.horizontalLayout_12.setSpacing(0)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_12.setContentsMargins(0, 0, 0, 5)
+        self.frame_2 = QFrame(self.frame)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setMinimumSize(QSize(200, 0))
+        self.frame_2.setFrameShape(QFrame.NoFrame)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.btnTranslateTextImage = QPushButton(self.frame_2)
+        self.btnTranslateTextImage.setObjectName(u"btnTranslateTextImage")
+        self.btnTranslateTextImage.setGeometry(QRect(10, 0, 111, 61))
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.btnTranslateTextImage.sizePolicy().hasHeightForWidth())
+        self.btnTranslateTextImage.setSizePolicy(sizePolicy2)
+        self.btnTranslateTextImage.setMinimumSize(QSize(50, 50))
+        self.btnTranslateTextImage.setFont(font)
+        self.btnTranslateTextImage.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.btnTranslateTextImage.setAutoFillBackground(False)
+        self.btnTranslateTextImage.setStyleSheet(u"QPushButton{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(0, 0, 0);\n"
+"	border: 0px solid;\n"
+" border-radius:20px;\n"
+"\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"background-color: rgb(85, 170, 255);\n"
+"}")
+        self.btnTranslateTextImage.setIconSize(QSize(35, 35))
+        self.btnTranslateTextImage.setAutoRepeat(False)
+
+        self.horizontalLayout_12.addWidget(self.frame_2)
+
+        self.frame_5 = QFrame(self.frame)
+        self.frame_5.setObjectName(u"frame_5")
+        sizePolicy1.setHeightForWidth(self.frame_5.sizePolicy().hasHeightForWidth())
+        self.frame_5.setSizePolicy(sizePolicy1)
+        self.frame_5.setFrameShape(QFrame.NoFrame)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+
+        self.horizontalLayout_12.addWidget(self.frame_5)
+
+        self.FrameSaveBtn = QFrame(self.frame)
         self.FrameSaveBtn.setObjectName(u"FrameSaveBtn")
         self.FrameSaveBtn.setMinimumSize(QSize(100, 70))
         self.FrameSaveBtn.setMaximumSize(QSize(100, 70))
@@ -760,11 +809,11 @@ class Ui_MainWindow(object):
         self.frameSizeGrip = QFrame(self.FrameSaveBtn)
         self.frameSizeGrip.setObjectName(u"frameSizeGrip")
         self.frameSizeGrip.setGeometry(QRect(94, 65, 16, 16))
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frameSizeGrip.sizePolicy().hasHeightForWidth())
-        self.frameSizeGrip.setSizePolicy(sizePolicy2)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.frameSizeGrip.sizePolicy().hasHeightForWidth())
+        self.frameSizeGrip.setSizePolicy(sizePolicy3)
         self.frameSizeGrip.setMinimumSize(QSize(16, 16))
         self.frameSizeGrip.setMaximumSize(QSize(16, 16))
         self.frameSizeGrip.setLayoutDirection(Qt.LeftToRight)
@@ -772,24 +821,13 @@ class Ui_MainWindow(object):
         self.frameSizeGrip.setFrameShape(QFrame.NoFrame)
         self.frameSizeGrip.setFrameShadow(QFrame.Raised)
 
-        self.verticalLayout_10.addWidget(self.FrameSaveBtn, 0, Qt.AlignRight)
-
-        self.FrameSave = QFrame(self.FrameContentDown)
-        self.FrameSave.setObjectName(u"FrameSave")
-        sizePolicy1.setHeightForWidth(self.FrameSave.sizePolicy().hasHeightForWidth())
-        self.FrameSave.setSizePolicy(sizePolicy1)
-        self.FrameSave.setMaximumSize(QSize(16777215, 70))
-        self.FrameSave.setFrameShape(QFrame.StyledPanel)
-        self.FrameSave.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_8 = QHBoxLayout(self.FrameSave)
-        self.horizontalLayout_8.setSpacing(0)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
-
-        self.verticalLayout_10.addWidget(self.FrameSave)
+        self.horizontalLayout_12.addWidget(self.FrameSaveBtn)
 
 
-        self.gridLayout.addWidget(self.FrameContentDown, 2, 0, 1, 1)
+        self.verticalLayout_8.addWidget(self.frame)
+
+
+        self.verticalLayout_10.addWidget(self.frame_6)
 
         self.Pages.addWidget(self.Image)
         self.PDF = QWidget()
@@ -806,11 +844,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
         self.FrameCongentUPOptionsPDF = QFrame(self.FrameContentLeftSidePDF)
         self.FrameCongentUPOptionsPDF.setObjectName(u"FrameCongentUPOptionsPDF")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.FrameCongentUPOptionsPDF.sizePolicy().hasHeightForWidth())
-        self.FrameCongentUPOptionsPDF.setSizePolicy(sizePolicy3)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.FrameCongentUPOptionsPDF.sizePolicy().hasHeightForWidth())
+        self.FrameCongentUPOptionsPDF.setSizePolicy(sizePolicy4)
         self.FrameCongentUPOptionsPDF.setMaximumSize(QSize(16777215, 262))
         self.FrameCongentUPOptionsPDF.setFrameShape(QFrame.StyledPanel)
         self.FrameCongentUPOptionsPDF.setFrameShadow(QFrame.Raised)
@@ -820,11 +858,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
         self.FrameOpenFilePDF = QFrame(self.FrameCongentUPOptionsPDF)
         self.FrameOpenFilePDF.setObjectName(u"FrameOpenFilePDF")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.FrameOpenFilePDF.sizePolicy().hasHeightForWidth())
-        self.FrameOpenFilePDF.setSizePolicy(sizePolicy4)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.FrameOpenFilePDF.sizePolicy().hasHeightForWidth())
+        self.FrameOpenFilePDF.setSizePolicy(sizePolicy5)
         self.FrameOpenFilePDF.setMaximumSize(QSize(16777215, 78))
         self.FrameOpenFilePDF.setFrameShape(QFrame.NoFrame)
         self.FrameOpenFilePDF.setFrameShadow(QFrame.Raised)
@@ -872,8 +910,8 @@ class Ui_MainWindow(object):
 
         self.FrameSelectLanguagePDF = QFrame(self.FrameCongentUPOptionsPDF)
         self.FrameSelectLanguagePDF.setObjectName(u"FrameSelectLanguagePDF")
-        sizePolicy3.setHeightForWidth(self.FrameSelectLanguagePDF.sizePolicy().hasHeightForWidth())
-        self.FrameSelectLanguagePDF.setSizePolicy(sizePolicy3)
+        sizePolicy4.setHeightForWidth(self.FrameSelectLanguagePDF.sizePolicy().hasHeightForWidth())
+        self.FrameSelectLanguagePDF.setSizePolicy(sizePolicy4)
         self.FrameSelectLanguagePDF.setMaximumSize(QSize(16777215, 57))
         self.FrameSelectLanguagePDF.setFrameShape(QFrame.NoFrame)
         self.FrameSelectLanguagePDF.setFrameShadow(QFrame.Raised)
@@ -998,8 +1036,8 @@ class Ui_MainWindow(object):
 
         self.FrameRecognizeAllBtn = QFrame(self.FrameCongentUPOptionsPDF)
         self.FrameRecognizeAllBtn.setObjectName(u"FrameRecognizeAllBtn")
-        sizePolicy3.setHeightForWidth(self.FrameRecognizeAllBtn.sizePolicy().hasHeightForWidth())
-        self.FrameRecognizeAllBtn.setSizePolicy(sizePolicy3)
+        sizePolicy4.setHeightForWidth(self.FrameRecognizeAllBtn.sizePolicy().hasHeightForWidth())
+        self.FrameRecognizeAllBtn.setSizePolicy(sizePolicy4)
         self.FrameRecognizeAllBtn.setMaximumSize(QSize(16777215, 123))
         self.FrameRecognizeAllBtn.setFrameShape(QFrame.StyledPanel)
         self.FrameRecognizeAllBtn.setFrameShadow(QFrame.Raised)
@@ -1119,6 +1157,27 @@ class Ui_MainWindow(object):
         self.FrameFilingSaveBtn.setMaximumSize(QSize(10000000, 16777215))
         self.FrameFilingSaveBtn.setFrameShape(QFrame.StyledPanel)
         self.FrameFilingSaveBtn.setFrameShadow(QFrame.Raised)
+        self.btnTranslateWindowPDF = QPushButton(self.FrameFilingSaveBtn)
+        self.btnTranslateWindowPDF.setObjectName(u"btnTranslateWindowPDF")
+        self.btnTranslateWindowPDF.setGeometry(QRect(0, 0, 100, 61))
+        self.btnTranslateWindowPDF.setMinimumSize(QSize(100, 50))
+        self.btnTranslateWindowPDF.setFont(font)
+        self.btnTranslateWindowPDF.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.btnTranslateWindowPDF.setAutoFillBackground(False)
+        self.btnTranslateWindowPDF.setStyleSheet(u"QPushButton{\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(0, 0, 0);\n"
+"	border: 0px solid;\n"
+" border-radius:20px;\n"
+"\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"background-color: rgb(85, 170, 255);\n"
+"}")
+        self.btnTranslateWindowPDF.setIconSize(QSize(35, 35))
+        self.btnTranslateWindowPDF.setAutoRepeat(False)
 
         self.horizontalLayout_26.addWidget(self.FrameFilingSaveBtn)
 
@@ -1208,11 +1267,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
         self.btnPreviewLeftPDF = QPushButton(self.frame_3)
         self.btnPreviewLeftPDF.setObjectName(u"btnPreviewLeftPDF")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.btnPreviewLeftPDF.sizePolicy().hasHeightForWidth())
-        self.btnPreviewLeftPDF.setSizePolicy(sizePolicy5)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.btnPreviewLeftPDF.sizePolicy().hasHeightForWidth())
+        self.btnPreviewLeftPDF.setSizePolicy(sizePolicy6)
         self.btnPreviewLeftPDF.setMinimumSize(QSize(80, 100))
         self.btnPreviewLeftPDF.setMaximumSize(QSize(16777215, 100))
         self.btnPreviewLeftPDF.setFont(font)
@@ -1266,8 +1325,8 @@ class Ui_MainWindow(object):
 
         self.btnPreviewRightPDF = QPushButton(self.frame_3)
         self.btnPreviewRightPDF.setObjectName(u"btnPreviewRightPDF")
-        sizePolicy5.setHeightForWidth(self.btnPreviewRightPDF.sizePolicy().hasHeightForWidth())
-        self.btnPreviewRightPDF.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.btnPreviewRightPDF.sizePolicy().hasHeightForWidth())
+        self.btnPreviewRightPDF.setSizePolicy(sizePolicy6)
         self.btnPreviewRightPDF.setMinimumSize(QSize(80, 0))
         self.btnPreviewRightPDF.setMaximumSize(QSize(16777215, 100))
         self.btnPreviewRightPDF.setFont(font)
@@ -1312,7 +1371,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.Pages.setCurrentIndex(1)
+        self.Pages.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1337,11 +1396,13 @@ class Ui_MainWindow(object):
         self.previewImage.setText("")
         self.btnPreviewLeftImage.setText("")
         self.btnPreviewRightImage.setText("")
+        self.btnTranslateTextImage.setText(QCoreApplication.translate("MainWindow", u"T\u0142umacz tekst", None))
         self.btnSaveImage.setText("")
         self.btnChooseFIlesPDF.setText("")
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt;\">J\u0119zyk:</span></p></body></html>", None))
         self.checkBoxSecondLanguagePDF.setText(QCoreApplication.translate("MainWindow", u"Kolejny j\u0119zyk?", None))
         self.btnRecognizeAllPDF.setText(QCoreApplication.translate("MainWindow", u"Rozpoznaj wszystkie strony", None))
+        self.btnTranslateWindowPDF.setText(QCoreApplication.translate("MainWindow", u"T\u0142umacz tekst", None))
         self.btnSavePDF.setText("")
         self.previewPDF.setText("")
         self.btnPreviewLeftPDF.setText("")

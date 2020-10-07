@@ -1,19 +1,28 @@
 import os
 
 from PIL.ImageQt import ImageQt
-from PySide2 import QtCore
-from PySide2.QtCore import QPropertyAnimation, QSize
+from PySide2 import QtCore, QtWidgets
+from PySide2.QtCore import QPropertyAnimation, QSize, Qt
 from PySide2.QtGui import QIcon, QPixmap
+from PySide2.QtWidgets import QProgressDialog
 
 from pytesseract import pytesseract
 
 from main import QSizeGrip
+from translateWindow import TranslateWindow
 
 
 class UiFunction():
 
     def __init__(self, mainWindow):
         self.mainWindow = mainWindow
+
+    def progressBarDialog(self, message, max):
+        progressDialog = QProgressDialog(message, "Anuluj", 0, max, self.mainWindow)
+        progressDialog.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(40, 40, 40);")
+        progressDialog.setWindowTitle("Proszę czekać")
+        progressDialog.setWindowModality(Qt.WindowModal)
+        return progressDialog
 
     #add necessary Tesseract path to instalation folder, chech what languages are install and add options to combobox
     # TODO setting page in MainWindow, where will be options to choose folder with tesseract
@@ -161,3 +170,8 @@ class UiFunction():
     def changeOptions(self, numerOfOptions):
         self.cleanPagesBeforeChangeOptions()
         self.mainWindow.ui.Pages.setCurrentIndex(numerOfOptions)
+
+
+    def showTranslateWindow(self, textToTranslate):
+
+        self.mainWindow.badania = TranslateWindow(textToTranslate)

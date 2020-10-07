@@ -8,6 +8,7 @@ class UiStyle():
     def __init__(self, mainWindow):
         self.mainWindow = mainWindow
 
+
     def correctingIconsPathAndVisibleSettings(self):
         self.correctingIconsWindow()
         self.correctingIconsImageRecognize()
@@ -38,4 +39,6 @@ class UiStyle():
         self.mainWindow.ui.btnPreviewLeftPDF.setIcon(QIcon(u"uiForms/Icons/bold-arrow-left.png"))
         self.mainWindow.ui.btnPreviewRightPDF.setIcon(QIcon(u"uiForms/Icons/bold-arrow-right.png"))
         self.mainWindow.ui.btnChooseFIlesPDF.setIcon(QIcon(u"uiForms/Icons/computer-folder-open.png"))
+
+
 
