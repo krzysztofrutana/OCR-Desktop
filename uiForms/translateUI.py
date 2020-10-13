@@ -17,7 +17,7 @@ class Ui_TranslateWindow(object):
     def setupUi(self, TranslateWindow):
         if not TranslateWindow.objectName():
             TranslateWindow.setObjectName(u"TranslateWindow")
-        TranslateWindow.resize(969, 703)
+        TranslateWindow.resize(855, 580)
         self.gridLayout = QGridLayout(TranslateWindow)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -36,7 +36,7 @@ class Ui_TranslateWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
-        self.frame.setMaximumSize(QSize(16777215, 80))
+        self.frame.setMaximumSize(QSize(16777215, 50))
         self.frame.setFrameShape(QFrame.NoFrame)
         self.frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_3 = QHBoxLayout(self.frame)
@@ -50,7 +50,7 @@ class Ui_TranslateWindow(object):
         self.label_2.setMaximumSize(QSize(70, 16777215))
         font = QFont()
         font.setFamily(u"Impact")
-        font.setPointSize(14)
+        font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet(u"color: rgb(255, 255, 255);")
 
@@ -58,7 +58,7 @@ class Ui_TranslateWindow(object):
 
         self.comboBoxFromLanguage = QComboBox(self.frame)
         self.comboBoxFromLanguage.setObjectName(u"comboBoxFromLanguage")
-        self.comboBoxFromLanguage.setMinimumSize(QSize(50, 50))
+        self.comboBoxFromLanguage.setMinimumSize(QSize(50, 30))
         font1 = QFont()
         font1.setFamily(u"Impact")
         font1.setPointSize(10)
@@ -105,7 +105,7 @@ class Ui_TranslateWindow(object):
 
         self.comboBoxToLanguage = QComboBox(self.frame)
         self.comboBoxToLanguage.setObjectName(u"comboBoxToLanguage")
-        self.comboBoxToLanguage.setMinimumSize(QSize(50, 50))
+        self.comboBoxToLanguage.setMinimumSize(QSize(50, 30))
         self.comboBoxToLanguage.setFont(font1)
         self.comboBoxToLanguage.setStyleSheet(u"QComboBox{\n"
 "color:rgb(255, 255, 255);\n"
@@ -315,7 +315,7 @@ class Ui_TranslateWindow(object):
 
         self.plainTextEditTranslateText = QPlainTextEdit(self.frame_3)
         self.plainTextEditTranslateText.setObjectName(u"plainTextEditTranslateText")
-        self.plainTextEditTranslateText.setMinimumSize(QSize(400, 100))
+        self.plainTextEditTranslateText.setMinimumSize(QSize(400, 400))
         self.plainTextEditTranslateText.setMaximumSize(QSize(16777215, 16666666))
         self.plainTextEditTranslateText.setFont(font4)
         self.plainTextEditTranslateText.setStyleSheet(u"QPlainTextEdit{\n"
