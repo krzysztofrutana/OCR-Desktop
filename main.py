@@ -14,8 +14,6 @@
 
 import sys
 
-from PySide2.QtCore import Qt
-
 from app_modules import *
 
 try:
@@ -31,6 +29,7 @@ class MainWindow(QMainWindow):
     #element number which is currently previewed
     whichImage = 0
 
+    queueToRecognize = []
 
     windowMaximized = False
 
@@ -82,10 +81,6 @@ class MainWindow(QMainWindow):
                 event.accept()
 
         self.ui.FrameTop.mouseMoveEvent = moveWindow
-
-
-
-
 
 
 if __name__ == "__main__":

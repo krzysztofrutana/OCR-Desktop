@@ -2,18 +2,27 @@ import os
 
 from PIL.ImageQt import ImageQt
 from PySide2 import QtCore
-from PySide2.QtCore import QPropertyAnimation, QSize
+from PySide2.QtCore import QPropertyAnimation, QSize, Qt
 from PySide2.QtGui import QIcon, QPixmap
+from PySide2.QtWidgets import QProgressDialog
 
 from pytesseract import pytesseract
 
 from main import QSizeGrip
+from translateWindow import TranslateWindow
 
 
 class UiFunction():
 
     def __init__(self, mainWindow):
         self.mainWindow = mainWindow
+
+    def progressBarDialog(self, message, max):
+        progressDialog = QProgressDialog(message, "Anuluj", 0, max, self.mainWindow)
+        progressDialog.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(40, 40, 40);")
+        progressDialog.setWindowTitle("Proszę czekać")
+        progressDialog.setWindowModality(Qt.WindowModal)
+        return progressDialog
 
     #add necessary Tesseract path to instalation folder, chech what languages are install and add options to combobox
     # TODO setting page in MainWindow, where will be options to choose folder with tesseract
@@ -80,6 +89,21 @@ class UiFunction():
         else:
             self.mainWindow.showNormal()
             self.mainWindow.windowMaximized = False
+        if len(self.mainWindow.listOfElementsToRecognize) > 0:
+            if self.mainWindow.ui.Pages.currentIndex() == 0:
+                imgagePixmap = QPixmap(
+                    str(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])).scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                 QtCore.Qt.SmoothTransformation)
+                self.mainWindow.ui.previewImage.setPixmap(imgagePixmap)
+                self.mainWindow.ui.previewImage.setScaledContents(True)
+            elif self.mainWindow.ui.Pages.currentIndex() == 1:
+                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                 QtCore.Qt.SmoothTransformation)
+                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                self.mainWindow.ui.previewPDF.setScaledContents(True)
 
     # TODO
     # refresh preview when resize or maximize window
@@ -87,18 +111,18 @@ class UiFunction():
         if len(self.mainWindow.listOfElementsToRecognizeStr) > 0:
             if self.mainWindow.Pages.currentIndex() == 0:
                 imgagePixmap = QPixmap(
-                    str(self.mainWindow.listOfElementsToRecognizeStr[self.mainWindow.whichImage])).scaled(
-                    QSize(self.mainWindow.ui.previewImage.width(), self.mainWindow.ui.previewImage.height()),
-                    QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+                    str(self.mainWindow.listOfElementsToRecognizeStr[self.mainWindow.whichImage])).scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                 QtCore.Qt.SmoothTransformation)
                 self.mainWindow.previewImage.setPixmap(imgagePixmap)
-                self.mainWindow.previewImage.setScaledContents(False)
+                self.mainWindow.previewImage.setScaledContents(True)
             elif self.mainWindow.Pages.currentIndex() == 1:
                 imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                imgagePixmap = QPixmap(imageqt).scaled(
-                    QSize(self.mainWindow.ui.previewPDF.width(), self.mainWindow.ui.previewPDF.height()),
-                    QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                 QtCore.Qt.SmoothTransformation)
                 self.mainWindow.previewPDF.setPixmap(imgagePixmap)
-                self.mainWindow.previewPDF.setScaledContents(False)
+                self.mainWindow.previewPDF.setScaledContents(True)
 
     # hide and show combobox to choose second language
     def checkBoxLanguageStateChange(self):
@@ -161,3 +185,8 @@ class UiFunction():
     def changeOptions(self, numerOfOptions):
         self.cleanPagesBeforeChangeOptions()
         self.mainWindow.ui.Pages.setCurrentIndex(numerOfOptions)
+
+
+    def showTranslateWindow(self, textToTranslate):
+
+        self.mainWindow.badania = TranslateWindow(textToTranslate)
