@@ -46,17 +46,19 @@ class ImageRecognizeFunction():
                         break
                 progressDialog.setValue(len(self.dialog[0]))
 
-                
-                #to preview in QLabel image before must be change to QPixmap
-                pixmap = QPixmap(str(self.dialog[0][0])).scaled(self.mainWindow.ui.previewImage.maximumHeight(),
-                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-                self.mainWindow.ui.previewImage.setPixmap(pixmap)
-                self.mainWindow.ui.previewImage.setScaledContents(True)
-                self.mainWindow.whichImage = 0
+                try:
+                    #to preview in QLabel image before must be change to QPixmap
+                    pixmap = QPixmap(str(self.dialog[0][0])).scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                    self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                    self.mainWindow.ui.previewImage.setPixmap(pixmap)
+                    self.mainWindow.ui.previewImage.setScaledContents(True)
+                    self.mainWindow.whichImage = 0
 
-                self.mainWindow.ui.labelCurrentImageNumber.setText(str(self.mainWindow.whichImage + 1))
-                self.mainWindow.ui.labelAllImageCountImage.setText(str(len(self.mainWindow.listOfElementsToRecognize)))
+                    self.mainWindow.ui.labelCurrentImageNumber.setText(str(self.mainWindow.whichImage + 1))
+                    self.mainWindow.ui.labelAllImageCountImage.setText(str(len(self.mainWindow.listOfElementsToRecognize)))
+                except Exception as inst:
+                    UiFunction.showErrorDialog(inst)
             else:
                 return
 
@@ -67,29 +69,42 @@ class ImageRecognizeFunction():
         if not name:
             return
         if filter == "Plik PDF (*.pdf)":
-            linesOriginalText = self.mainWindow.ui.plainTextEditOutputImage.toPlainText().split("\n")
-            template = pd.DataFrame(linesOriginalText, dtype=str, columns=[""])
-            html = template.to_html(index=False, border=0)
-            htmlFile = open("temp.html", "w", encoding="utf-8")
-            htmlFile.write(html)
-            htmlFile.close()
+            try:
+                linesOriginalText = self.mainWindow.ui.plainTextEditOutputImage.toPlainText().split("\n")
+                template = pd.DataFrame(linesOriginalText, dtype=str, columns=[""])
+                html = template.to_html(index=False, border=0)
+                htmlFile = open("temp.html", "w", encoding="utf-8")
+                htmlFile.write(html)
+                htmlFile.close()
 
-            doc = QTextDocument()
-            html = open("temp.html", "r", encoding="utf-8")
-            doc.setHtml(html.read())
-            html.close()
+                doc = QTextDocument()
+                try:
+                    html = open("temp.html", "r", encoding="utf-8")
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z szablonem PDF \n" + str(inst))
+                doc.setHtml(html.read())
+                html.close()
 
-            printer = QPrinter()
-            printer.setOutputFileName(name)
-            printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setPageSize(QPrinter.A4)
-            printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
+                try:
+                    printer = QPrinter()
+                    printer.setOutputFileName(name)
+                    printer.setOutputFormat(QPrinter.PdfFormat)
+                    printer.setPageSize(QPrinter.A4)
+                    printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
 
-            doc.print_(printer)
-            os.remove('temp.html')
+                    doc.print_(printer)
+
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z tworzeniem PDF \n" + str(inst))
+                os.remove('temp.html')
+            except Exception as inst:
+                UiFunction.showErrorDialog(inst)
 
         elif filter == "Plik tekstowy (*.txt)":
-            file = open(name, 'w')
+            try:
+                file = open(name, 'w')
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem podczas otwierania wybranego pliku \n" + str(inst))
             output = self.mainWindow.ui.plainTextEditOutputImage.toPlainText()
             file.write(output)
             file.close()
@@ -99,87 +114,108 @@ class ImageRecognizeFunction():
     # next file in preview.
     # TODO when the window is maximized, when the photo is changegd the preview frame size increases
     def nextImage(self):
-        if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage >= 0:
-            self.mainWindow.whichImage += 1
-            if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize):
-                self.mainWindow.whichImage = 0
-                self.mainWindow.ui.previewImage.setPixmap(
-                    QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                    .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
-                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation))
-                self.mainWindow.ui.previewImage.setScaledContents(True)
-            else:
-                self.mainWindow.ui.previewImage.setPixmap(
-                    QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                    .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
-                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation))
-                self.mainWindow.ui.previewImage.setScaledContents(True)
+        try:
+            if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage >= 0:
+                self.mainWindow.whichImage += 1
+                if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize):
+                    self.mainWindow.whichImage = 0
+                    self.mainWindow.ui.previewImage.setPixmap(
+                        QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                        .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                    self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation))
+                    self.mainWindow.ui.previewImage.setScaledContents(True)
+                else:
+                    self.mainWindow.ui.previewImage.setPixmap(
+                        QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                        .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                    self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation))
+                    self.mainWindow.ui.previewImage.setScaledContents(True)
+        except Exception as inst:
+            UiFunction.showErrorDialog("Wystąpił problem przy tworzeniu podglądu \n" + str(inst))
         self.mainWindow.ui.labelCurrentImageNumber.setText(str(self.mainWindow.whichImage + 1))
 
     #next file in preview
     # TODO this same bug like in nextImage method
     def previousImage(self):
-        if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage < len(
-                self.mainWindow.listOfElementsToRecognize):
-            self.mainWindow.whichImage -= 1
-            if self.mainWindow.whichImage < 0:
-                self.mainWindow.whichImage = len(self.mainWindow.listOfElementsToRecognize) - 1
-                self.mainWindow.ui.previewImage.setPixmap(
-                    QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                    .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
-                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation))
-                self.mainWindow.ui.previewImage.setScaledContents(True)
-            else:
-                self.mainWindow.ui.previewImage.setPixmap(
-                    QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                    .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
-                                                                self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation))
-                self.mainWindow.ui.previewImage.setScaledContents(True)
+        try:
+            if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage < len(
+                    self.mainWindow.listOfElementsToRecognize):
+                self.mainWindow.whichImage -= 1
+                if self.mainWindow.whichImage < 0:
+                    self.mainWindow.whichImage = len(self.mainWindow.listOfElementsToRecognize) - 1
+                    self.mainWindow.ui.previewImage.setPixmap(
+                        QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                        .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                    self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation))
+                    self.mainWindow.ui.previewImage.setScaledContents(True)
+                else:
+                    self.mainWindow.ui.previewImage.setPixmap(
+                        QPixmap(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                        .scaled(self.mainWindow.ui.previewImage.maximumHeight(),
+                                                                    self.mainWindow.ui.previewImage.maximumWidth(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation))
+                    self.mainWindow.ui.previewImage.setScaledContents(True)
+        except Exception as inst:
+            UiFunction.showErrorDialog("Wystąpił problem przy tworzeniu podglądu \n" + str(inst))
         self.mainWindow.ui.labelCurrentImageNumber.setText(str(self.mainWindow.whichImage + 1))
 
     # recognize text from all picture in listOfElementsToRecognize list
     def recognizeAll(self):
-        uiFunction = UiFunction(self.mainWindow)
-        progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu",
-                                                      len(self.mainWindow.listOfElementsToRecognize))
+        try:
+            if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                UiFunction.showErrorDialog("Najpierw wybierz pliki")
+                return
+            uiFunction = UiFunction(self.mainWindow)
+            progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu",
+                                                          len(self.mainWindow.listOfElementsToRecognize))
 
-        progressDialog.setValue(0)
+            progressDialog.setValue(0)
 
-        self.mainWindow.ui.plainTextEditOutputImage.clear()
-        for i in range(0, len(self.mainWindow.listOfElementsToRecognize)):
-            progressDialog.setValue(i)
-            if progressDialog.wasCanceled():
-                break
-            image = Image.open(self.mainWindow.listOfElementsToRecognize[i])
-            self.mainWindow.ui.plainTextEditOutputImage.appendPlainText("---------Grafika " + str(i + 1) + "---------")
-            if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
-                self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                        lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
-                                                                                                             "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
-            else:
-                self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
-                    pytesseract.image_to_string(image,
-                                                lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
-        progressDialog.setValue(len(self.mainWindow.listOfElementsToRecognize))
+            self.mainWindow.ui.plainTextEditOutputImage.clear()
+            for i in range(0, len(self.mainWindow.listOfElementsToRecognize)):
+                progressDialog.setValue(i)
+                if progressDialog.wasCanceled():
+                    break
+                image = Image.open(self.mainWindow.listOfElementsToRecognize[i])
+                self.mainWindow.ui.plainTextEditOutputImage.appendPlainText("---------Grafika " + str(i + 1) + "---------")
+                try:
+                    if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
+                        self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                                lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
+                                                                                                                     "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
+                    else:
+                        self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
+                            pytesseract.image_to_string(image,
+                                                        lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
+            progressDialog.setValue(len(self.mainWindow.listOfElementsToRecognize))
+        except Exception as inst:
+            UiFunction.showErrorDialog("Wystąpił problem podczas rozpoznawania tekstu \n" + str(inst))
 
     # recognition of text from a photo that is currently on preview
     def recognizeCurrent(self):
         self.mainWindow.ui.plainTextEditOutputImage.clear()
         if len(self.mainWindow.queueToRecognize) == 0:
             self.mainWindow.ui.plainTextEditOutputImage.clear()
+            if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                UiFunction.showErrorDialog("Najpierw wybierz pliki")
+                return
             image = self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage]
-            if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
-                self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                      lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
-                                                                                                           "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
-            else:
-                self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
-                    pytesseract.image_to_string(image,
-                                                lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
+            try:
+                if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
+                    self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                          lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
+                                                                                                               "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
+                else:
+                    self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
+                        pytesseract.image_to_string(image,
+                                                    lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
         else:
             number = self.mainWindow.ui.textEditQueueImage.toPlainText().split(',')
             uiFunction = UiFunction(self.mainWindow)
@@ -192,21 +228,30 @@ class ImageRecognizeFunction():
                 progressDialog.setValue(k)
                 if progressDialog.wasCanceled():
                     break
+                if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                    UiFunction.showErrorDialog("Najpierw wybierz pliki")
+                    return
                 image = self.mainWindow.listOfElementsToRecognize[int(i) - 1]
                 self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
                     "---------Grafika " + str(int(i)) + "---------")
-                if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
-                    self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                          lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
-                                                                                                               "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
-                else:
-                    self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
-                        pytesseract.image_to_string(image,
-                                                    lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
+                try:
+                    if self.mainWindow.ui.checkBoxSecondLanguageImage.isChecked():
+                        self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                              lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower() +
+                                                                                                                   "+" + self.mainWindow.ui.comboBoxSecondLanguageImage.currentText().lower()))
+                    else:
+                        self.mainWindow.ui.plainTextEditOutputImage.appendPlainText(
+                            pytesseract.image_to_string(image,
+                                                        lang=self.mainWindow.ui.comboBoxLanguageImage.currentText().lower()))
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
             progressDialog.setValue(len(number))
 
     def addToQueue(self):
         if len(self.mainWindow.queueToRecognize) == 0:
+            if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                UiFunction.showErrorDialog("Najpierw wybierz pliki")
+                return
             self.mainWindow.ui.textEditQueueImage.setText(" " + str(self.mainWindow.whichImage + 1))
         else:
             self.mainWindow.ui.textEditQueueImage.setText(self.mainWindow.ui.textEditQueueImage.toPlainText() + ", " + str(self.mainWindow.whichImage + 1))
@@ -252,17 +297,22 @@ class PDFRecognizeFunction(ImageRecognizeFunction):
             uiFunction = UiFunction(self.mainWindow)
             progressDialog = uiFunction.progressBarDialog("Ładowanie pliku PDF", pdfFile.numPages)
 
+            #This is not fastest solution, but work very well
+
             for i in range(pdfFile.numPages):
                 progressDialog.setValue(i)
                 if progressDialog.wasCanceled():
                     break
-                output = PdfFileWriter()
-                output.addPage(pdfFile.getPage(i))
-                with open("temp.pdf", "wb") as outputStream:
-                    output.write(outputStream)
-                image = pdf2image.convert_from_path("temp.pdf", poppler_path="./bin/poppler/poppler-0.68.0/bin",
-                                                                 thread_count=4)
-                self.mainWindow.listOfElementsToRecognize.append(image[0])
+                try:
+                    output = PdfFileWriter()
+                    output.addPage(pdfFile.getPage(i))
+                    with open("temp.pdf", "wb") as outputStream:
+                        output.write(outputStream)
+                    image = pdf2image.convert_from_path("temp.pdf", poppler_path="./bin/poppler/poppler-0.68.0/bin",
+                                                                     thread_count=4)
+                    self.mainWindow.listOfElementsToRecognize.append(image[0])
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Otwieranie PDF nie powiodło się \n" + str(inst))
                 if os.path.exists("temp.pdf"):
                     os.remove("temp.pdf")
 
@@ -270,15 +320,18 @@ class PDFRecognizeFunction(ImageRecognizeFunction):
 
             # to make QPixmap object, before from JPEG or other format necessary is make ImageQt object
             # or normal Image object
-            imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-            imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
-                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-            self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
-            self.mainWindow.ui.previewPDF.setScaledContents(True)
-            self.mainWindow.whichImage = 0
-            self.mainWindow.ui.labelCurrentPageNumberPDF.setText(str(self.mainWindow.whichImage+1))
-            self.mainWindow.ui.labelAllPageNumberPDF.setText(str(len(self.mainWindow.listOfElementsToRecognize)))
+            try:
+                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                    self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                self.mainWindow.ui.previewPDF.setScaledContents(True)
+                self.mainWindow.whichImage = 0
+                self.mainWindow.ui.labelCurrentPageNumberPDF.setText(str(self.mainWindow.whichImage+1))
+                self.mainWindow.ui.labelAllPageNumberPDF.setText(str(len(self.mainWindow.listOfElementsToRecognize)))
+            except Exception as inst:
+                UiFunction.showErrorDialog("Tworzenie podglądu nie powiodło się \n" + str(inst))
         else:
             return
 
@@ -302,138 +355,186 @@ class PDFRecognizeFunction(ImageRecognizeFunction):
         if not name:
             return
         if filter == "Plik PDF (*.pdf)":
-            linesOriginalText = self.mainWindow.ui.plainTextEditOutputPDF.toPlainText().split("\n")
-            template = pd.DataFrame(linesOriginalText, dtype=str, columns=[""])
-            html = template.to_html(index=False, border=0)
-            htmlFile = open("temp.html", "w", encoding="utf-8")
-            htmlFile.write(html)
-            htmlFile.close()
+            try:
+                linesOriginalText = self.mainWindow.ui.plainTextEditOutputPDF.toPlainText().split("\n")
+                template = pd.DataFrame(linesOriginalText, dtype=str, columns=[""])
+                html = template.to_html(index=False, border=0)
+                htmlFile = open("temp.html", "w", encoding="utf-8")
+                htmlFile.write(html)
+                htmlFile.close()
 
-            doc = QTextDocument()
-            html = open("temp.html", "r", encoding="utf-8")
-            doc.setHtml(html.read())
-            html.close()
+                doc = QTextDocument()
+                try:
+                    html = open("temp.html", "r", encoding="utf-8")
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z szablonem PDF \n" + str(inst))
+                doc.setHtml(html.read())
+                html.close()
 
-            printer = QPrinter()
-            printer.setOutputFileName(name)
-            printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setPageSize(QPrinter.A4)
-            printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
+                try:
+                    printer = QPrinter()
+                    printer.setOutputFileName(name)
+                    printer.setOutputFormat(QPrinter.PdfFormat)
+                    printer.setPageSize(QPrinter.A4)
+                    printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
 
-            doc.print_(printer)
-            os.remove('temp.html')
+                    doc.print_(printer)
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z generowaniem pliku PDF \n" + str(inst))
+                os.remove('temp.html')
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem z tworzeniem pliku PDF \n" + str(inst))
 
         elif filter == "Plik tekstowy (*.txt)":
-            file = open(name, 'w')
-            output = self.mainWindow.ui.plainTextEditOutputPDF.toPlainText()
-            file.write(output)
-            file.close()
+            try:
+                try:
+                    file = open(name, 'w')
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z wybranym plikiem \n" + str(inst))
+                output = self.mainWindow.ui.plainTextEditOutputPDF.toPlainText()
+                file.write(output)
+                file.close()
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem z zapisem pliku \n" + str(inst))
 
 
     def nextImage(self):
         if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage >= 0:
             self.mainWindow.whichImage += 1
-            if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize):
-                self.mainWindow.whichImage = 0
-                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height()(),
-                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
-                self.mainWindow.ui.previewPDF.setScaledContents(True)
-            else:
+            try:
+                if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize):
+                    self.mainWindow.whichImage = 0
+                    imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                    imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height()(),
+                                                                    self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                    self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                    self.mainWindow.ui.previewPDF.setScaledContents(True)
+                else:
 
-                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
-                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
-                self.mainWindow.ui.previewPDF.setScaledContents(True)
+                    imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                    imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                    self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                    self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                    self.mainWindow.ui.previewPDF.setScaledContents(True)
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem z tworzeniem podglądu \n" + str(inst))
         self.mainWindow.ui.labelCurrentPageNumberPDF.setText(str(self.mainWindow.whichImage + 1))
 
     def previousImage(self):
         if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage < len(
                 self.mainWindow.listOfElementsToRecognize):
-            self.mainWindow.whichImage -= 1
-            if self.mainWindow.whichImage < 0:
-                self.mainWindow.whichImage = len(self.mainWindow.listOfElementsToRecognize) - 1
-                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
-                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
-                self.mainWindow.ui.previewPDF.setScaledContents(True)
-            else:
-                imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
-                imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
-                                                                self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
-                 QtCore.Qt.SmoothTransformation)
-                self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
-                self.mainWindow.ui.previewPDF.setScaledContents(True)
+            try:
+                self.mainWindow.whichImage -= 1
+                if self.mainWindow.whichImage < 0:
+                    self.mainWindow.whichImage = len(self.mainWindow.listOfElementsToRecognize) - 1
+                    imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                    imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                    self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                    self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                    self.mainWindow.ui.previewPDF.setScaledContents(True)
+                else:
+                    imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
+                    imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height(),
+                                                                    self.mainWindow.ui.previewPDF.width(),QtCore.Qt.KeepAspectRatio,
+                     QtCore.Qt.SmoothTransformation)
+                    self.mainWindow.ui.previewPDF.setPixmap(imgagePixmap)
+                    self.mainWindow.ui.previewPDF.setScaledContents(True)
+            except Exception as inst:
+                UiFunction.showErrorDialog("Wystąpił problem z tworzeniem podglądu \n" + str(inst))
         self.mainWindow.ui.labelCurrentPageNumberPDF.setText(str(self.mainWindow.whichImage + 1))
 
     def recognizeAll(self):
-        uiFunction = UiFunction(self.mainWindow)
-        progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu", len(self.mainWindow.listOfElementsToRecognize))
-        progressDialog.setValue(0)
-
-        self.mainWindow.ui.plainTextEditOutputPDF.clear()
-        for i in range(0, len(self.mainWindow.listOfElementsToRecognize)):
-            progressDialog.setValue(i)
-            if progressDialog.wasCanceled():
-                break
-            image = self.mainWindow.listOfElementsToRecognize[i]
-            self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText("---------Strona " + str(i + 1) + "---------")
-            if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
-                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                      lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
-                                                                                                           "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
-            else:
-                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
-                    pytesseract.image_to_string(image,
-                                                lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
-        progressDialog.setValue(len(self.mainWindow.listOfElementsToRecognize))
-
-    def recognizeCurrent(self):
-        self.mainWindow.ui.plainTextEditOutputPDF.clear()
-        if len(self.mainWindow.queueToRecognize) == 0:
-            self.mainWindow.ui.plainTextEditOutputPDF.clear()
-            image = self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage]
-            if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
-                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                      lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
-                                                                                                           "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
-            else:
-                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
-                    pytesseract.image_to_string(image, lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
-        else:
-            number = self.mainWindow.ui.textEditQueuePDF.toPlainText().split(',')
+        try:
             uiFunction = UiFunction(self.mainWindow)
-            progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu",
-                                                          len(number))
-            k = 0
-            progressDialog.setValue(k)
-            self.mainWindow.ui.plainTextEditOutputImage.clear()
-            for i in number:
-                k = k + 1
-                progressDialog.setValue(k)
+            if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                UiFunction.showErrorDialog("Najpierw wybierz plik")
+                return
+            progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu", len(self.mainWindow.listOfElementsToRecognize))
+            progressDialog.setValue(0)
+
+            self.mainWindow.ui.plainTextEditOutputPDF.clear()
+            for i in range(0, len(self.mainWindow.listOfElementsToRecognize)):
+                progressDialog.setValue(i)
                 if progressDialog.wasCanceled():
                     break
-                image = self.mainWindow.listOfElementsToRecognize[int(i)-1]
-                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText("---------Strona " + str(int(i)) + "---------")
-                if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
-                    self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
-                                                                                                          lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
-                                                                                                               "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
-                else:
-                    self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
-                        pytesseract.image_to_string(image,
-                                                    lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
-            progressDialog.setValue(len(number))
+                image = self.mainWindow.listOfElementsToRecognize[i]
+                self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText("---------Strona " + str(i + 1) + "---------")
+                try:
+                    if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
+                        self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                              lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
+                                                                                                                   "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
+                    else:
+                        self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
+                            pytesseract.image_to_string(image,
+                                                        lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
+            progressDialog.setValue(len(self.mainWindow.listOfElementsToRecognize))
+        except Exception as inst:
+            UiFunction.showErrorDialog("Wystąpił problem podczas rozpoznawania tekstu \n" + str(inst))
+
+    def recognizeCurrent(self):
+        try:
+            self.mainWindow.ui.plainTextEditOutputPDF.clear()
+            if len(self.mainWindow.queueToRecognize) == 0:
+                self.mainWindow.ui.plainTextEditOutputPDF.clear()
+                if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                    UiFunction.showErrorDialog("Najpierw wybierz plik")
+                    return
+                image = self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage]
+                try:
+                    if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
+                        self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                              lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
+                                                                                                                   "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
+                    else:
+                        self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
+                            pytesseract.image_to_string(image, lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
+                except Exception as inst:
+                    UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
+            else:
+                number = self.mainWindow.ui.textEditQueuePDF.toPlainText().split(',')
+                uiFunction = UiFunction(self.mainWindow)
+                progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu",
+                                                              len(number))
+                k = 0
+                progressDialog.setValue(k)
+                self.mainWindow.ui.plainTextEditOutputImage.clear()
+                for i in number:
+                    k = k + 1
+                    progressDialog.setValue(k)
+                    if progressDialog.wasCanceled():
+                        break
+                    if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                        UiFunction.showErrorDialog("Najpierw wybierz plik")
+                        return
+                    image = self.mainWindow.listOfElementsToRecognize[int(i)-1]
+                    self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText("---------Strona " + str(int(i)) + "---------")
+                    try:
+                        if self.mainWindow.ui.checkBoxSecondLanguagePDF.isChecked():
+                            self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(pytesseract.image_to_string(image,
+                                                                                                                  lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower() +
+                                                                                                                       "+" + self.mainWindow.ui.comboBoxSecondLanguagePDF.currentText().lower()))
+                        else:
+                            self.mainWindow.ui.plainTextEditOutputPDF.appendPlainText(
+                                pytesseract.image_to_string(image,
+                                                            lang=self.mainWindow.ui.comboBoxLanguagePDF.currentText().lower()))
+                    except Exception as inst:
+                        UiFunction.showErrorDialog("Wystąpił problem z odczytywaniem tekstu \n" + str(inst))
+                progressDialog.setValue(len(number))
+        except Exception as inst:
+            UiFunction.showErrorDialog("Wystąpił problem podczas rozpoznawania tekstu \n" + str(inst))
 
 
     def addToQueue(self):
         if len(self.mainWindow.queueToRecognize) == 0:
+            if len(self.mainWindow.listOfElementsToRecognize) == 0:
+                UiFunction.showErrorDialog("Najpierw wybierz plik")
+                return
             self.mainWindow.ui.textEditQueuePDF.setText(" " + str(self.mainWindow.whichImage + 1))
         else:
             self.mainWindow.ui.textEditQueuePDF.setText(self.mainWindow.ui.textEditQueuePDF.toPlainText() + ", " + str(self.mainWindow.whichImage + 1))

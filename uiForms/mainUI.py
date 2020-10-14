@@ -705,7 +705,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.previewImage.sizePolicy().hasHeightForWidth())
         self.previewImage.setSizePolicy(sizePolicy)
         self.previewImage.setMinimumSize(QSize(100, 190))
-        self.previewImage.setMaximumSize(QSize(800, 500))
+        self.previewImage.setMaximumSize(QSize(1000, 700))
         self.previewImage.setStyleSheet(u"background-color: rgb(100, 100, 100);\n"
 "border-color: rgb(0, 0, 0);\n"
 "border: 5px solid;")
@@ -1500,7 +1500,7 @@ class Ui_MainWindow(object):
         self.FrameSavePDF.setObjectName(u"FrameSavePDF")
         sizePolicy6.setHeightForWidth(self.FrameSavePDF.sizePolicy().hasHeightForWidth())
         self.FrameSavePDF.setSizePolicy(sizePolicy6)
-        self.FrameSavePDF.setMinimumSize(QSize(50, 50))
+        self.FrameSavePDF.setMinimumSize(QSize(50, 65))
         self.FrameSavePDF.setMaximumSize(QSize(16777215, 80))
         self.FrameSavePDF.setFrameShape(QFrame.NoFrame)
         self.FrameSavePDF.setFrameShadow(QFrame.Raised)
@@ -1511,7 +1511,7 @@ class Ui_MainWindow(object):
         self.FrameFilingSaveBtn.setObjectName(u"FrameFilingSaveBtn")
         sizePolicy6.setHeightForWidth(self.FrameFilingSaveBtn.sizePolicy().hasHeightForWidth())
         self.FrameFilingSaveBtn.setSizePolicy(sizePolicy6)
-        self.FrameFilingSaveBtn.setMinimumSize(QSize(0, 50))
+        self.FrameFilingSaveBtn.setMinimumSize(QSize(0, 60))
         self.FrameFilingSaveBtn.setMaximumSize(QSize(10000000, 16777215))
         self.FrameFilingSaveBtn.setFrameShape(QFrame.StyledPanel)
         self.FrameFilingSaveBtn.setFrameShadow(QFrame.Raised)
@@ -1600,7 +1600,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.previewPDF.sizePolicy().hasHeightForWidth())
         self.previewPDF.setSizePolicy(sizePolicy)
         self.previewPDF.setMinimumSize(QSize(0, 0))
-        self.previewPDF.setMaximumSize(QSize(300000, 300000))
+        self.previewPDF.setMaximumSize(QSize(1600000, 1600000))
         self.previewPDF.setStyleSheet(u"background-color: rgb(100, 100, 100);\n"
 "border-color: rgb(0, 0, 0);\n"
 "border: 5px solid;")
@@ -1776,7 +1776,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.Pages.setCurrentIndex(0)
+        self.Pages.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

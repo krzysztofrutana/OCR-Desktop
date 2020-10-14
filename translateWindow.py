@@ -2,8 +2,9 @@ import os
 
 from PySide2.QtGui import QIcon, QTextDocument
 from PySide2.QtPrintSupport import QPrinter
-from PySide2.QtWidgets import QWidget, QFileDialog
+from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from googletrans import Translator
+
 from uiForms.translateUI import Ui_TranslateWindow
 
 import pandas as pd
@@ -147,23 +148,34 @@ class TranslateWindow(QWidget):
 
         self.refreshStylesheet()
 
-
+    def showErrorDialog(self,messege):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Warning)
+        msgBox.setText(str(messege))
+        msgBox.setWindowTitle("Błąd")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.setStyleSheet("background-color: rgb(40, 40, 40); color: rgb(255, 255, 255)")
+        msgBox.exec()
+        
     def translateText(self, textToTranslate):
-        self.ui.plainTextEditTranslateText.clear()
-        translator = Translator()
-        if self.ui.comboBoxFromLanguage.currentText() == "Wykryj język":
-            dest = list(self.LANGUAGES.keys())[
-                list(self.LANGUAGES.values()).index(self.ui.comboBoxToLanguage.currentText())]
-            translation = translator.translate(
-                textToTranslate, dest=dest)
-        else:
-            dest = list(self.LANGUAGES.keys())[
-                list(self.LANGUAGES.values()).index(self.ui.comboBoxToLanguage.currentText())]
-            src = list(self.LANGUAGES.keys())[
-                list(self.LANGUAGES.values()).index(self.ui.comboBoxFromLanguage.currentText())]
-            translation = translator.translate(
-                textToTranslate, dest=dest, src=src)
-        self.ui.plainTextEditTranslateText.appendPlainText(translation.text)
+        try:
+            self.ui.plainTextEditTranslateText.clear()
+            translator = Translator()
+            if self.ui.comboBoxFromLanguage.currentText() == "Wykryj język":
+                dest = list(self.LANGUAGES.keys())[
+                    list(self.LANGUAGES.values()).index(self.ui.comboBoxToLanguage.currentText())]
+                translation = translator.translate(
+                    textToTranslate, dest=dest)
+            else:
+                dest = list(self.LANGUAGES.keys())[
+                    list(self.LANGUAGES.values()).index(self.ui.comboBoxToLanguage.currentText())]
+                src = list(self.LANGUAGES.keys())[
+                    list(self.LANGUAGES.values()).index(self.ui.comboBoxFromLanguage.currentText())]
+                translation = translator.translate(
+                    textToTranslate, dest=dest, src=src)
+            self.ui.plainTextEditTranslateText.appendPlainText(translation.text)
+        except Exception as inst:
+            self.showErrorDialog("Wystąpił problem podczas tłumaczenia \n" + str(inst))
 
 
     def sortuj(self, sl, sort='asc'):
@@ -188,47 +200,51 @@ class TranslateWindow(QWidget):
         return t
 
     def comboboxChanged(self):
-        if self.ui.comboBoxFromLanguage.currentText() == "Wykryj język":
-            self.ui.label.setVisible(True)
-            self.ui.labelSearchLanguage.setVisible(True)
+        try:
+            if self.ui.comboBoxFromLanguage.currentText() == "Wykryj język":
+                self.ui.label.setVisible(True)
+                self.ui.labelSearchLanguage.setVisible(True)
 
-            translator = Translator()
-            if self.ui.plainTextEditOriginalText.toPlainText():
-                languageDetect = translator.detect(self.ui.plainTextEditOriginalText.toPlainText()).lang
-                languageDetect = list(self.LANGUAGES.values())[list(self.LANGUAGES.keys()).index(languageDetect)]
-                self.ui.labelSearchLanguage.setText(languageDetect)
-        else:
-            self.ui.label.setVisible(False)
-            self.ui.labelSearchLanguage.setVisible(False)
+                translator = Translator()
+                if self.ui.plainTextEditOriginalText.toPlainText():
+                    languageDetect = translator.detect(self.ui.plainTextEditOriginalText.toPlainText()).lang
+                    languageDetect = list(self.LANGUAGES.values())[list(self.LANGUAGES.keys()).index(languageDetect)]
+                    self.ui.labelSearchLanguage.setText(languageDetect)
+            else:
+                self.ui.label.setVisible(False)
+                self.ui.labelSearchLanguage.setVisible(False)
+        except Exception as inst:
+            self.showErrorDialog("Wystąpił problem podczas wykrywania języka \n" + str(inst))
 
+    # Without this method progressbar in QTextPlainEdit and font color in QComboBox is doesn't display correctly
     def refreshStylesheet(self):
         comboboxes = [self.ui.comboBoxFromLanguage, self.ui.comboBoxToLanguage]
 
         for i in comboboxes:
             i.setStyleSheet(u"QComboBox{\n"
-"color:rgb(255, 255, 255);\n"
-"	background-color: rgb(27, 27, 27);\n"
-"	border-radius: 10px;\n"
-"	border: 2px solid rgb(27, 27, 27);\n"
-"	padding: 5px;\n"
-"	padding-left: 10px;\n"
-"}\n"
-"QComboBox:hover{\n"
-"	border: 2px solid rgb(27, 27, 27);\n"
-"}\n"
-"QComboBox::drop-down {\n"
-"color:rgb(255, 255, 255);\n"
-"\n"
-"	width: 25px; \n"
-"\n"
-" }\n"
-"\n"
-"QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(27, 27, 27);\n"
-"	padding: 10px;\n"
-"	selection-background-color: rgb(27, 27, 27);\n"
-"}"
+                                                    "color:rgb(255, 255, 255);\n"
+                                                    "	background-color: rgb(27, 27, 27);\n"
+                                                    "	border-radius: 10px;\n"
+                                                    "	border: 2px solid rgb(27, 27, 27);\n"
+                                                    "	padding: 5px;\n"
+                                                    "	padding-left: 10px;\n"
+                                                    "}\n"
+                                                    "QComboBox:hover{\n"
+                                                    "	border: 2px solid rgb(27, 27, 27);\n"
+                                                    "}\n"
+                                                    "QComboBox::drop-down {\n"
+                                                    "color:rgb(255, 255, 255);\n"
+                                                    "\n"
+                                                    "	width: 25px; \n"
+                                                    "\n"
+                                                    " }\n"
+                                                    "\n"
+                                                    "QComboBox QAbstractItemView {\n"
+                                                    "	color: rgb(255, 255, 255);\n"
+                                                    "	background-color: rgb(27, 27, 27);\n"
+                                                    "	padding: 10px;\n"
+                                                    "	selection-background-color: rgb(27, 27, 27);\n"
+                                                    "}"
                             "QScrollBar:vertical {\n"
                                                      "border: none;\n"
                                                      " background: rgb(27, 27, 27);\n"
@@ -326,45 +342,63 @@ class TranslateWindow(QWidget):
         if not name:
             return
         if filter == "Plik PDF (*.pdf)":
-            template = pd.DataFrame(table,dtype=str)
-            template = template.T
-            template.columns = ["Oryginał", "Tłumaczenie"]
-            html = template.to_html(index=False, border=0)
-            htmlFile = open("temp.html", "w", encoding="utf-8")
-            htmlFile.write(html)
-            htmlFile.close()
+            try:
+                try:
+                    template = pd.DataFrame(table,dtype=str)
+                    template = template.T
+                    template.columns = ["Oryginał", "Tłumaczenie"]
+                    html = template.to_html(index=False, border=0)
+                    htmlFile = open("temp.html", "w", encoding="utf-8")
+                    htmlFile.write(html)
+                    htmlFile.close()
+                except Exception as inst:
+                    self.showErrorDialog("Problem podczas tworzenia szablonu PDF \n" + str(inst))
 
-            doc = QTextDocument()
-            html = open("temp.html", "r", encoding="utf-8")
-            doc.setHtml(html.read())
-            html.close()
+                doc = QTextDocument()
+                try:
+                    html = open("temp.html", "r", encoding="utf-8")
+                    doc.setHtml(html.read())
+                except Exception as inst:
+                    self.showErrorDialog("Problem z szablonem PDF \n" + str(inst))
+                html.close()
 
-            printer = QPrinter()
-            printer.setOutputFileName(name)
-            printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setPageSize(QPrinter.A4)
-            printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
+                try:
+                    printer = QPrinter()
+                    printer.setOutputFileName(name)
+                    printer.setOutputFormat(QPrinter.PdfFormat)
+                    printer.setPageSize(QPrinter.A4)
+                    printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
 
-            doc.print_(printer)
-
+                    doc.print_(printer)
+                    os.remove('temp.html')
+                except Exception as inst:
+                    self.showErrorDialog("Problem z generowanie pliku PDF \n" + str(inst))
+            except Exception as inst:
+                self.showErrorDialog("Problem podczas zapisu pliku PDF \n" + str(inst))
 
         elif filter == "Plik tekstowy (*.txt)":
-            file = open(name, "w", encoding='utf-8')
-            if len(linesOriginalText) >= len(linesTranslateText):
-                longer = linesOriginalText
-            else:
-                longer = linesTranslateText
-            for index in range(len(longer)):
-                if not linesOriginalText[index]:
-                    linesOriginalText.append("")
-                if not linesTranslateText[index]:
-                    linesTranslateText.append("")
-                if len(linesOriginalText[index]) == 0 and len(linesTranslateText[index]) == 0:
-                    file.write("\n")
+            try:
+                file = open(name, "w", encoding='utf-8')
+            except Exception as inst:
+                self.showErrorDialog("Problem z wybranym plikiem \n" + str(inst))
+            try:
+                if len(linesOriginalText) >= len(linesTranslateText):
+                    longer = linesOriginalText
                 else:
-                    file.write(str(linesOriginalText[index]) + "     -->     " + str(linesTranslateText[index]) + "\n")
-            file.close()
-        os.remove('temp.html')
+                    longer = linesTranslateText
+                for index in range(len(longer)):
+                    if not linesOriginalText[index]:
+                        linesOriginalText.append("")
+                    if not linesTranslateText[index]:
+                        linesTranslateText.append("")
+                    if len(linesOriginalText[index]) == 0 and len(linesTranslateText[index]) == 0:
+                        file.write("\n")
+                    else:
+                        file.write(str(linesOriginalText[index]) + "     -->     " + str(linesTranslateText[index]) + "\n")
+                file.close()
+            except Exception as inst:
+                self.showErrorDialog("Problem z tworzeniem pliku tekstowego \n" + str(inst))
+
 
     def saveTranslate(self):
         filesTypes = "Plik tekstowy (*.txt);;Plik PDF (*.pdf)"
@@ -372,29 +406,47 @@ class TranslateWindow(QWidget):
         if not name:
             return
         if filter == "Plik PDF (*.pdf)":
-            linesOriginalText = self.ui.plainTextEditOriginalText.toPlainText().split("\n")
-            template = pd.DataFrame(linesOriginalText, dtype=str, columns=["Tłumaczenie"])
-            html = template.to_html(index=False, border=0)
-            htmlFile = open("temp.html", "w", encoding="utf-8")
-            htmlFile.write(html)
-            htmlFile.close()
+            try:
+                try:
+                    linesOriginalText = self.ui.plainTextEditOriginalText.toPlainText().split("\n")
+                    template = pd.DataFrame(linesOriginalText, dtype=str, columns=["Tłumaczenie"])
+                    html = template.to_html(index=False, border=0)
+                    htmlFile = open("temp.html", "w", encoding="utf-8")
+                    htmlFile.write(html)
+                    htmlFile.close()
+                except Exception as inst:
+                    self.showErrorDialog("Problem podczas tworzenia szablonu PDF \n" + str(inst))
 
-            doc = QTextDocument()
-            html = open("temp.html", "r", encoding="utf-8")
-            doc.setHtml(html.read())
-            html.close()
+                doc = QTextDocument()
+                try:
+                    html = open("temp.html", "r", encoding="utf-8")
+                    doc.setHtml(html.read())
+                except Exception as inst:
+                    self.showErrorDialog("Problem z szablonem PDF \n" + str(inst))
+                html.close()
 
-            printer = QPrinter()
-            printer.setOutputFileName(name)
-            printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setPageSize(QPrinter.A4)
-            printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
+                try:
+                    printer = QPrinter()
+                    printer.setOutputFileName(name)
+                    printer.setOutputFormat(QPrinter.PdfFormat)
+                    printer.setPageSize(QPrinter.A4)
+                    printer.setPageMargins(4, 4, 4, 4, QPrinter.Millimeter)
 
-            doc.print_(printer)
+                    doc.print_(printer)
+                    os.remove('temp.html')
+                except Exception as inst:
+                    self.showErrorDialog("Problem z generowanie pliku PDF \n" + str(inst))
+            except Exception as inst:
+                self.showErrorDialog("Problem podczas zapisu pliku PDF \n" + str(inst))
 
         elif filter == "Plik tekstowy (*.txt)":
-            file = open(name, 'w')
-            output = self.ui.plainTextEditTranslateText.toPlainText()
-            file.write(output)
-            file.close()
-        os.remove('temp.html')
+            try:
+                file = open(name, "w", encoding='utf-8')
+            except Exception as inst:
+                self.showErrorDialog("Problem z wybranym plikiem \n" + str(inst))
+            try:
+                output = self.ui.plainTextEditTranslateText.toPlainText()
+                file.write(output)
+                file.close()
+            except Exception as inst:
+                self.showErrorDialog("Problem z tworzeniem pliku tekstowego \n" + str(inst))

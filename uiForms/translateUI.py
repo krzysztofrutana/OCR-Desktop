@@ -17,7 +17,8 @@ class Ui_TranslateWindow(object):
     def setupUi(self, TranslateWindow):
         if not TranslateWindow.objectName():
             TranslateWindow.setObjectName(u"TranslateWindow")
-        TranslateWindow.resize(855, 580)
+        TranslateWindow.resize(855, 600)
+        TranslateWindow.setMinimumSize(QSize(855, 600))
         self.gridLayout = QGridLayout(TranslateWindow)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
