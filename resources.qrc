@@ -8,6 +8,12 @@
     <file>resources/icons/computer-folder-open.png</file>
     <file>resources/icons/line-angle-down.png</file>
   </qresource>
+  <qresource prefix="programIcons">
+    <file>resources/icons/programIcons/OCR 16P-01.png</file>
+    <file>resources/icons/programIcons/OCR 32P-01-01.png</file>
+    <file>resources/icons/programIcons/OCRK-01.png</file>
+    <file>resources/icons/programIcons/OCR 200P-01.png</file>
+  </qresource>
   <qresource prefix="leftMenu">
     <file>resources/icons/64x64Image.png</file>
     <file>resources/icons/64x64PDF.png</file>

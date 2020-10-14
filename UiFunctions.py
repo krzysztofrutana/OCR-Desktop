@@ -61,16 +61,12 @@ class UiFunction():
                 newWidth = maxExtend
                 self.mainWindow.ui.LabelCopyright.setVisible(True)
                 self.mainWindow.ui.btnImageRecognize.setText("  Rozpoznaj zdjęcie")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"resources/icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("  Rozpoznaj PDF")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"resources/icons/64x64PDF.png"))
             else:
                 newWidth = standard
                 self.mainWindow.ui.LabelCopyright.setVisible(False)
                 self.mainWindow.ui.btnImageRecognize.setText("")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"resources/icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"resources/icons/64x64PDF.png"))
 
             # animation
             # this solution comes from WANDERSON M.PIMENTA project from his github
