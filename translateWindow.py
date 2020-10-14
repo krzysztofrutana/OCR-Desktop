@@ -9,6 +9,9 @@ from uiForms.translateUI import Ui_TranslateWindow
 
 import pandas as pd
 
+# TODO translate have this same limit like google translator in webpage. So impossible is translate longer
+#  text. I think possible is split text to shorter part and translate one by one.
+
 class TranslateWindow(QWidget):
     LANGUAGES = {
         'af': 'afrikaans',
