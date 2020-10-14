@@ -25,6 +25,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QSize(1000, 550))
+        icon = QIcon()
+        icon.addFile(u":/programIcons/resources/icons/programIcons/OCR 200P-01.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -69,9 +72,9 @@ class Ui_MainWindow(object):
         self.btnToogleMenu.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "border: 0px solid;\n"
 "font: 75 20pt \"MS Shell Dlg 2\";")
-        icon = QIcon()
-        icon.addFile(u":/window/resources/icons/windowIcon/clipart365828.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnToogleMenu.setIcon(icon)
+        icon1 = QIcon()
+        icon1.addFile(u":/window/resources/icons/windowIcon/clipart365828.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnToogleMenu.setIcon(icon1)
         self.btnToogleMenu.setIconSize(QSize(35, 30))
 
         self.verticalLayout_2.addWidget(self.btnToogleMenu)
@@ -115,9 +118,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon1 = QIcon()
-        icon1.addFile(u":/window/resources/icons/windowIcon/cil-window-minimize.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnMinimize.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u":/window/resources/icons/windowIcon/cil-window-minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnMinimize.setIcon(icon2)
         self.btnMinimize.setIconSize(QSize(16, 16))
         self.btnMinimize.setFlat(True)
 
@@ -135,9 +138,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon2 = QIcon()
-        icon2.addFile(u":/window/resources/icons/windowIcon/cil-window-maximize.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnMaximize.setIcon(icon2)
+        icon3 = QIcon()
+        icon3.addFile(u":/window/resources/icons/windowIcon/cil-window-maximize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnMaximize.setIcon(icon3)
         self.btnMaximize.setIconSize(QSize(16, 16))
         self.btnMaximize.setFlat(True)
 
@@ -155,9 +158,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon3 = QIcon()
-        icon3.addFile(u":/window/resources/icons/windowIcon/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnX.setIcon(icon3)
+        icon4 = QIcon()
+        icon4.addFile(u":/window/resources/icons/windowIcon/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnX.setIcon(icon4)
         self.btnX.setIconSize(QSize(16, 16))
         self.btnX.setFlat(True)
 
@@ -218,9 +221,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon4 = QIcon()
-        icon4.addFile(u":/leftMenu/resources/icons/64x64Image.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnImageRecognize.setIcon(icon4)
+        icon5 = QIcon()
+        icon5.addFile(u":/leftMenu/resources/icons/64x64Image.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnImageRecognize.setIcon(icon5)
         self.btnImageRecognize.setIconSize(QSize(60, 60))
         self.btnImageRecognize.setAutoRepeat(False)
 
@@ -242,9 +245,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon5 = QIcon()
-        icon5.addFile(u":/leftMenu/resources/icons/64x64PDF.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPDFRecognize.setIcon(icon5)
+        icon6 = QIcon()
+        icon6.addFile(u":/leftMenu/resources/icons/64x64PDF.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPDFRecognize.setIcon(icon6)
         self.btnPDFRecognize.setIconSize(QSize(60, 60))
         self.btnPDFRecognize.setAutoRepeat(True)
 
@@ -422,9 +425,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon6 = QIcon()
-        icon6.addFile(u":/content/resources/icons/computer-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnChooseFIlesImage.setIcon(icon6)
+        icon7 = QIcon()
+        icon7.addFile(u":/content/resources/icons/computer-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnChooseFIlesImage.setIcon(icon7)
         self.btnChooseFIlesImage.setIconSize(QSize(50, 50))
         self.btnChooseFIlesImage.setAutoRepeat(False)
 
@@ -868,9 +871,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon7 = QIcon()
-        icon7.addFile(u":/content/resources/icons/bold-arrow-left.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPreviewLeftImage.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u":/content/resources/icons/bold-arrow-left.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPreviewLeftImage.setIcon(icon8)
         self.btnPreviewLeftImage.setIconSize(QSize(30, 30))
         self.btnPreviewLeftImage.setAutoRepeat(False)
 
@@ -925,9 +928,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon8 = QIcon()
-        icon8.addFile(u":/content/resources/icons/bold-arrow-right.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPreviewRightImage.setIcon(icon8)
+        icon9 = QIcon()
+        icon9.addFile(u":/content/resources/icons/bold-arrow-right.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPreviewRightImage.setIcon(icon9)
         self.btnPreviewRightImage.setIconSize(QSize(30, 30))
         self.btnPreviewRightImage.setAutoRepeat(False)
 
@@ -1089,9 +1092,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon9 = QIcon()
-        icon9.addFile(u":/content/resources/icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnSaveImage.setIcon(icon9)
+        icon10 = QIcon()
+        icon10.addFile(u":/content/resources/icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnSaveImage.setIcon(icon10)
         self.btnSaveImage.setIconSize(QSize(30, 30))
         self.btnSaveImage.setAutoRepeat(False)
 
@@ -1174,7 +1177,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnChooseFIlesPDF.setIcon(icon6)
+        self.btnChooseFIlesPDF.setIcon(icon7)
         self.btnChooseFIlesPDF.setIconSize(QSize(50, 50))
         self.btnChooseFIlesPDF.setAutoRepeat(False)
 
@@ -1613,7 +1616,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnSavePDF.setIcon(icon9)
+        self.btnSavePDF.setIcon(icon10)
         self.btnSavePDF.setIconSize(QSize(35, 35))
         self.btnSavePDF.setAutoRepeat(False)
 
@@ -1744,7 +1747,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnPreviewLeftPDF.setIcon(icon7)
+        self.btnPreviewLeftPDF.setIcon(icon8)
         self.btnPreviewLeftPDF.setIconSize(QSize(30, 30))
         self.btnPreviewLeftPDF.setAutoRepeat(False)
 
@@ -1799,7 +1802,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnPreviewRightPDF.setIcon(icon8)
+        self.btnPreviewRightPDF.setIcon(icon9)
         self.btnPreviewRightPDF.setIconSize(QSize(30, 30))
         self.btnPreviewRightPDF.setAutoRepeat(False)
 

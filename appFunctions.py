@@ -402,7 +402,7 @@ class PDFRecognizeFunction(ImageRecognizeFunction):
         if len(self.mainWindow.listOfElementsToRecognize) > 1 and self.mainWindow.whichImage >= 0:
             self.mainWindow.whichImage += 1
             try:
-                if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize):
+                if self.mainWindow.whichImage == len(self.mainWindow.listOfElementsToRecognize)-1:
                     self.mainWindow.whichImage = 0
                     imageqt = ImageQt(self.mainWindow.listOfElementsToRecognize[self.mainWindow.whichImage])
                     imgagePixmap = QPixmap(imageqt).scaled(self.mainWindow.ui.previewPDF.height()(),

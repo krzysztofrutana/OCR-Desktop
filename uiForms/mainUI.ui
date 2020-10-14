@@ -26,6 +26,10 @@
   <property name="windowTitle">
    <string>OCR-KR</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/programIcons/resources/icons/programIcons/OCR 200P-01.png</normaloff>:/programIcons/resources/icons/programIcons/OCR 200P-01.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

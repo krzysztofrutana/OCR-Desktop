@@ -14,6 +14,8 @@
 
 import sys
 
+from PySide2 import QtGui
+
 from app_modules import *
 import ctypes
 try:
@@ -84,20 +86,10 @@ class MainWindow(QMainWindow):
 
 
 
-        kernel32 = ctypes.WinDLL('kernel32')
-        user32 = ctypes.WinDLL('user32')
-
-        SW_HIDE = 0
-
-        hWnd = kernel32.GetConsoleWindow()
-        if hWnd:
-            user32.ShowWindow(hWnd, SW_HIDE)
-
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
+    app.setWindowIcon(QtGui.QIcon('icon.ico'))
     window = MainWindow()
     window.show()
 
