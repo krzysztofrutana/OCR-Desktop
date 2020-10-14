@@ -123,8 +123,8 @@ class TranslateWindow(QWidget):
 
         self.ui.label.setVisible(False)
         self.ui.labelSearchLanguage.setVisible(False)
-        self.ui.btnSaveEverything.setIcon(QIcon(u"uiForms/Icons/cil-save.png"))
-        self.ui.btnSaveOnlyTranslate.setIcon(QIcon(u"uiForms/Icons/cil-save.png"))
+        self.ui.btnSaveEverything.setIcon(QIcon(u"resources/icons/cil-save.png"))
+        self.ui.btnSaveOnlyTranslate.setIcon(QIcon(u"resources/icons/cil-save.png"))
         self.ui.plainTextEditOriginalText.appendPlainText(textToTranslate)
         self.ui.btnTranslateEverything.clicked.connect(lambda : self.translateText(self.ui.plainTextEditOriginalText.toPlainText()))
         self.ui.btnTranslateSelected.clicked.connect(lambda : self.translateText(self.ui.plainTextEditOriginalText.textCursor().selectedText()))
@@ -408,7 +408,7 @@ class TranslateWindow(QWidget):
         if filter == "Plik PDF (*.pdf)":
             try:
                 try:
-                    linesOriginalText = self.ui.plainTextEditOriginalText.toPlainText().split("\n")
+                    linesOriginalText = self.ui.plainTextEditTranslateText.toPlainText().split("\n")
                     template = pd.DataFrame(linesOriginalText, dtype=str, columns=["Tłumaczenie"])
                     html = template.to_html(index=False, border=0)
                     htmlFile = open("temp.html", "w", encoding="utf-8")

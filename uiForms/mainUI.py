@@ -12,6 +12,7 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+import resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -69,13 +70,9 @@ class Ui_MainWindow(object):
 "border: 0px solid;\n"
 "font: 75 20pt \"MS Shell Dlg 2\";")
         icon = QIcon()
-        iconThemeName = u"UI"
-        if QIcon.hasThemeIcon(iconThemeName):
-            icon = QIcon.fromTheme(iconThemeName)
-        else:
-            icon.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
-        
+        icon.addFile(u":/window/resources/icons/windowIcon/clipart365828.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnToogleMenu.setIcon(icon)
+        self.btnToogleMenu.setIconSize(QSize(35, 30))
 
         self.verticalLayout_2.addWidget(self.btnToogleMenu)
 
@@ -118,6 +115,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
+        icon1 = QIcon()
+        icon1.addFile(u":/window/resources/icons/windowIcon/cil-window-minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnMinimize.setIcon(icon1)
         self.btnMinimize.setIconSize(QSize(16, 16))
         self.btnMinimize.setFlat(True)
 
@@ -135,6 +135,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
+        icon2 = QIcon()
+        icon2.addFile(u":/window/resources/icons/windowIcon/cil-window-maximize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnMaximize.setIcon(icon2)
         self.btnMaximize.setIconSize(QSize(16, 16))
         self.btnMaximize.setFlat(True)
 
@@ -152,6 +155,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
+        icon3 = QIcon()
+        icon3.addFile(u":/window/resources/icons/windowIcon/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnX.setIcon(icon3)
         self.btnX.setIconSize(QSize(16, 16))
         self.btnX.setFlat(True)
 
@@ -212,9 +218,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon1 = QIcon()
-        icon1.addFile(u"Icons/64x64Image.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnImageRecognize.setIcon(icon1)
+        icon4 = QIcon()
+        icon4.addFile(u":/leftMenu/resources/icons/64x64Image.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnImageRecognize.setIcon(icon4)
         self.btnImageRecognize.setIconSize(QSize(60, 60))
         self.btnImageRecognize.setAutoRepeat(False)
 
@@ -236,9 +242,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon2 = QIcon()
-        icon2.addFile(u"Icons/64x64PDF.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPDFRecognize.setIcon(icon2)
+        icon5 = QIcon()
+        icon5.addFile(u":/leftMenu/resources/icons/64x64PDF.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPDFRecognize.setIcon(icon5)
         self.btnPDFRecognize.setIconSize(QSize(60, 60))
         self.btnPDFRecognize.setAutoRepeat(True)
 
@@ -289,18 +295,24 @@ class Ui_MainWindow(object):
         self.FrameAppContent.setObjectName(u"FrameAppContent")
         self.FrameAppContent.setFrameShape(QFrame.NoFrame)
         self.FrameAppContent.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_6 = QVBoxLayout(self.FrameAppContent)
-        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_12 = QVBoxLayout(self.FrameAppContent)
+        self.verticalLayout_12.setSpacing(0)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6 = QVBoxLayout()
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.Pages = QStackedWidget(self.FrameAppContent)
         self.Pages.setObjectName(u"Pages")
+        sizePolicy.setHeightForWidth(self.Pages.sizePolicy().hasHeightForWidth())
+        self.Pages.setSizePolicy(sizePolicy)
         self.Pages.setFrameShadow(QFrame.Plain)
         self.Pages.setLineWidth(0)
         self.Image = QWidget()
         self.Image.setObjectName(u"Image")
         self.verticalLayout_10 = QVBoxLayout(self.Image)
+        self.verticalLayout_10.setSpacing(0)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.FrameContentUp = QFrame(self.Image)
         self.FrameContentUp.setObjectName(u"FrameContentUp")
         self.FrameContentUp.setMinimumSize(QSize(0, 300))
@@ -318,7 +330,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9 = QVBoxLayout(self.FrameContentLeftSide)
         self.verticalLayout_9.setSpacing(20)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_9.setContentsMargins(5, 0, 0, 0)
         self.FrameChooseFiles = QFrame(self.FrameContentLeftSide)
         self.FrameChooseFiles.setObjectName(u"FrameChooseFiles")
         self.FrameChooseFiles.setMinimumSize(QSize(0, 100))
@@ -362,9 +374,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon3 = QIcon()
-        icon3.addFile(u"Icons/computer-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnChooseFIlesImage.setIcon(icon3)
+        icon6 = QIcon()
+        icon6.addFile(u":/content/resources/icons/computer-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnChooseFIlesImage.setIcon(icon6)
         self.btnChooseFIlesImage.setIconSize(QSize(50, 50))
         self.btnChooseFIlesImage.setAutoRepeat(False)
 
@@ -699,7 +711,9 @@ class Ui_MainWindow(object):
         self.frame_9.setFrameShape(QFrame.NoFrame)
         self.frame_9.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.frame_9)
+        self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 9, 5, 5)
         self.previewImage = QLabel(self.frame_9)
         self.previewImage.setObjectName(u"previewImage")
         sizePolicy.setHeightForWidth(self.previewImage.sizePolicy().hasHeightForWidth())
@@ -709,7 +723,7 @@ class Ui_MainWindow(object):
         self.previewImage.setStyleSheet(u"background-color: rgb(100, 100, 100);\n"
 "border-color: rgb(0, 0, 0);\n"
 "border: 5px solid;")
-        self.previewImage.setPixmap(QPixmap(u"Icons/128x128 Preview.png"))
+        self.previewImage.setPixmap(QPixmap(u":/content/resources/icons/128x128 Preview.png"))
         self.previewImage.setScaledContents(False)
         self.previewImage.setAlignment(Qt.AlignCenter)
         self.previewImage.setMargin(0)
@@ -732,6 +746,7 @@ class Ui_MainWindow(object):
         self.frame_8.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_13 = QHBoxLayout(self.frame_8)
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
         self.label_3 = QLabel(self.frame_8)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setMaximumSize(QSize(50, 16777215))
@@ -808,9 +823,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon4 = QIcon()
-        icon4.addFile(u"Icons/bold-arrow-left.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPreviewLeftImage.setIcon(icon4)
+        icon7 = QIcon()
+        icon7.addFile(u":/content/resources/icons/bold-arrow-left.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPreviewLeftImage.setIcon(icon7)
         self.btnPreviewLeftImage.setIconSize(QSize(30, 30))
         self.btnPreviewLeftImage.setAutoRepeat(False)
 
@@ -865,9 +880,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon5 = QIcon()
-        icon5.addFile(u"Icons/bold-arrow-right.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnPreviewRightImage.setIcon(icon5)
+        icon8 = QIcon()
+        icon8.addFile(u":/content/resources/icons/bold-arrow-right.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnPreviewRightImage.setIcon(icon8)
         self.btnPreviewRightImage.setIconSize(QSize(30, 30))
         self.btnPreviewRightImage.setAutoRepeat(False)
 
@@ -892,7 +907,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_8 = QVBoxLayout(self.frame_6)
         self.verticalLayout_8.setSpacing(10)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.verticalLayout_8.setContentsMargins(0, 15, 0, 0)
+        self.verticalLayout_8.setContentsMargins(5, 15, 5, 0)
         self.plainTextEditOutputImage = QPlainTextEdit(self.frame_6)
         self.plainTextEditOutputImage.setObjectName(u"plainTextEditOutputImage")
         self.plainTextEditOutputImage.setMinimumSize(QSize(400, 90))
@@ -963,14 +978,14 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.btnTranslateTextImage = QPushButton(self.frame_2)
         self.btnTranslateTextImage.setObjectName(u"btnTranslateTextImage")
-        self.btnTranslateTextImage.setGeometry(QRect(10, 0, 111, 50))
+        self.btnTranslateTextImage.setGeometry(QRect(10, 0, 111, 55))
         sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy5.setHorizontalStretch(0)
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.btnTranslateTextImage.sizePolicy().hasHeightForWidth())
         self.btnTranslateTextImage.setSizePolicy(sizePolicy5)
-        self.btnTranslateTextImage.setMinimumSize(QSize(50, 50))
-        self.btnTranslateTextImage.setMaximumSize(QSize(16777215, 50))
+        self.btnTranslateTextImage.setMinimumSize(QSize(50, 55))
+        self.btnTranslateTextImage.setMaximumSize(QSize(16777215, 55))
         self.btnTranslateTextImage.setFont(font6)
         self.btnTranslateTextImage.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.btnTranslateTextImage.setAutoFillBackground(False)
@@ -1011,8 +1026,9 @@ class Ui_MainWindow(object):
         self.FrameSaveBtn.setFrameShadow(QFrame.Raised)
         self.btnSaveImage = QPushButton(self.FrameSaveBtn)
         self.btnSaveImage.setObjectName(u"btnSaveImage")
-        self.btnSaveImage.setGeometry(QRect(30, 0, 61, 61))
-        self.btnSaveImage.setMinimumSize(QSize(50, 50))
+        self.btnSaveImage.setGeometry(QRect(20, 0, 70, 55))
+        self.btnSaveImage.setMinimumSize(QSize(70, 55))
+        self.btnSaveImage.setMaximumSize(QSize(70, 55))
         self.btnSaveImage.setFont(font)
         self.btnSaveImage.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.btnSaveImage.setAutoFillBackground(False)
@@ -1028,25 +1044,11 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        icon6 = QIcon()
-        icon6.addFile(u"Icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnSaveImage.setIcon(icon6)
-        self.btnSaveImage.setIconSize(QSize(35, 35))
+        icon9 = QIcon()
+        icon9.addFile(u":/content/resources/icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnSaveImage.setIcon(icon9)
+        self.btnSaveImage.setIconSize(QSize(30, 30))
         self.btnSaveImage.setAutoRepeat(False)
-        self.frameSizeGrip = QFrame(self.FrameSaveBtn)
-        self.frameSizeGrip.setObjectName(u"frameSizeGrip")
-        self.frameSizeGrip.setGeometry(QRect(94, 65, 16, 16))
-        sizePolicy7 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.frameSizeGrip.sizePolicy().hasHeightForWidth())
-        self.frameSizeGrip.setSizePolicy(sizePolicy7)
-        self.frameSizeGrip.setMinimumSize(QSize(16, 16))
-        self.frameSizeGrip.setMaximumSize(QSize(16, 16))
-        self.frameSizeGrip.setLayoutDirection(Qt.LeftToRight)
-        self.frameSizeGrip.setStyleSheet(u"")
-        self.frameSizeGrip.setFrameShape(QFrame.NoFrame)
-        self.frameSizeGrip.setFrameShadow(QFrame.Raised)
 
         self.horizontalLayout_12.addWidget(self.FrameSaveBtn)
 
@@ -1060,7 +1062,9 @@ class Ui_MainWindow(object):
         self.PDF = QWidget()
         self.PDF.setObjectName(u"PDF")
         self.horizontalLayout_17 = QHBoxLayout(self.PDF)
+        self.horizontalLayout_17.setSpacing(0)
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.horizontalLayout_17.setContentsMargins(5, 5, 0, 0)
         self.FrameContentLeftSidePDF = QFrame(self.PDF)
         self.FrameContentLeftSidePDF.setObjectName(u"FrameContentLeftSidePDF")
         self.FrameContentLeftSidePDF.setFrameShape(QFrame.StyledPanel)
@@ -1082,11 +1086,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
         self.FrameOpenFilePDF = QFrame(self.FrameCongentUPOptionsPDF)
         self.FrameOpenFilePDF.setObjectName(u"FrameOpenFilePDF")
-        sizePolicy8 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        sizePolicy8.setHorizontalStretch(0)
-        sizePolicy8.setVerticalStretch(0)
-        sizePolicy8.setHeightForWidth(self.FrameOpenFilePDF.sizePolicy().hasHeightForWidth())
-        self.FrameOpenFilePDF.setSizePolicy(sizePolicy8)
+        sizePolicy7 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy7.setHorizontalStretch(0)
+        sizePolicy7.setVerticalStretch(0)
+        sizePolicy7.setHeightForWidth(self.FrameOpenFilePDF.sizePolicy().hasHeightForWidth())
+        self.FrameOpenFilePDF.setSizePolicy(sizePolicy7)
         self.FrameOpenFilePDF.setMinimumSize(QSize(0, 40))
         self.FrameOpenFilePDF.setMaximumSize(QSize(16777215, 78))
         self.FrameOpenFilePDF.setFrameShape(QFrame.NoFrame)
@@ -1125,7 +1129,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnChooseFIlesPDF.setIcon(icon3)
+        self.btnChooseFIlesPDF.setIcon(icon6)
         self.btnChooseFIlesPDF.setIconSize(QSize(50, 50))
         self.btnChooseFIlesPDF.setAutoRepeat(False)
 
@@ -1564,7 +1568,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnSavePDF.setIcon(icon6)
+        self.btnSavePDF.setIcon(icon9)
         self.btnSavePDF.setIconSize(QSize(35, 35))
         self.btnSavePDF.setAutoRepeat(False)
 
@@ -1604,7 +1608,7 @@ class Ui_MainWindow(object):
         self.previewPDF.setStyleSheet(u"background-color: rgb(100, 100, 100);\n"
 "border-color: rgb(0, 0, 0);\n"
 "border: 5px solid;")
-        self.previewPDF.setPixmap(QPixmap(u"Icons/128x128 Preview.png"))
+        self.previewPDF.setPixmap(QPixmap(u":/content/resources/icons/128x128 Preview.png"))
         self.previewPDF.setScaledContents(False)
         self.previewPDF.setAlignment(Qt.AlignCenter)
         self.previewPDF.setMargin(0)
@@ -1695,7 +1699,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnPreviewLeftPDF.setIcon(icon4)
+        self.btnPreviewLeftPDF.setIcon(icon7)
         self.btnPreviewLeftPDF.setIconSize(QSize(30, 30))
         self.btnPreviewLeftPDF.setAutoRepeat(False)
 
@@ -1750,7 +1754,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "background-color: rgb(85, 170, 255);\n"
 "}")
-        self.btnPreviewRightPDF.setIcon(icon5)
+        self.btnPreviewRightPDF.setIcon(icon8)
         self.btnPreviewRightPDF.setIconSize(QSize(30, 30))
         self.btnPreviewRightPDF.setAutoRepeat(False)
 
@@ -1766,6 +1770,48 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.Pages)
 
+        self.frame_10 = QFrame(self.FrameAppContent)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setMaximumSize(QSize(16777215, 20))
+        self.frame_10.setStyleSheet(u"background-color: rgb(0, 0, 0);")
+        self.frame_10.setFrameShape(QFrame.NoFrame)
+        self.frame_10.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_18 = QHBoxLayout(self.frame_10)
+        self.horizontalLayout_18.setSpacing(0)
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.frame_13 = QFrame(self.frame_10)
+        self.frame_13.setObjectName(u"frame_13")
+        sizePolicy.setHeightForWidth(self.frame_13.sizePolicy().hasHeightForWidth())
+        self.frame_13.setSizePolicy(sizePolicy)
+        self.frame_13.setMaximumSize(QSize(16777215, 15))
+        self.frame_13.setFrameShape(QFrame.NoFrame)
+        self.frame_13.setFrameShadow(QFrame.Raised)
+        self.labelLog = QLabel(self.frame_13)
+        self.labelLog.setObjectName(u"labelLog")
+        self.labelLog.setGeometry(QRect(10, 0, 47, 13))
+        sizePolicy.setHeightForWidth(self.labelLog.sizePolicy().hasHeightForWidth())
+        self.labelLog.setSizePolicy(sizePolicy)
+        self.labelLog.setStyleSheet(u"color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_18.addWidget(self.frame_13)
+
+        self.frameSizeGrip = QFrame(self.frame_10)
+        self.frameSizeGrip.setObjectName(u"frameSizeGrip")
+        self.frameSizeGrip.setMinimumSize(QSize(15, 15))
+        self.frameSizeGrip.setMaximumSize(QSize(15, 15))
+        self.frameSizeGrip.setStyleSheet(u"image: url(:/content/resources/icons/cil-size-grip.png);")
+        self.frameSizeGrip.setFrameShape(QFrame.NoFrame)
+        self.frameSizeGrip.setFrameShadow(QFrame.Raised)
+
+        self.horizontalLayout_18.addWidget(self.frameSizeGrip)
+
+
+        self.verticalLayout_6.addWidget(self.frame_10)
+
+
+        self.verticalLayout_12.addLayout(self.verticalLayout_6)
+
 
         self.horizontalLayout_2.addWidget(self.FrameAppContent)
 
@@ -1776,7 +1822,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.Pages.setCurrentIndex(1)
+        self.Pages.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1784,7 +1830,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"OCR-KR", None))
-        self.btnToogleMenu.setText(QCoreApplication.translate("MainWindow", u"|||", None))
+        self.btnToogleMenu.setText("")
         self.btnMinimize.setText("")
         self.btnMaximize.setText("")
         self.btnX.setText("")
@@ -1830,5 +1876,6 @@ class Ui_MainWindow(object):
         self.btnPreviewLeftPDF.setText("")
         self.btnAddToQueuePDF.setText(QCoreApplication.translate("MainWindow", u"Dodaj do kolejki", None))
         self.btnPreviewRightPDF.setText("")
+        self.labelLog.setText("")
     # retranslateUi
 

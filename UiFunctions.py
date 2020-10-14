@@ -61,16 +61,16 @@ class UiFunction():
                 newWidth = maxExtend
                 self.mainWindow.ui.LabelCopyright.setVisible(True)
                 self.mainWindow.ui.btnImageRecognize.setText("  Rozpoznaj zdjęcie")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"uiForms/Icons/64x64Image.png"))
+                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"resources/icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("  Rozpoznaj PDF")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"uiForms/Icons/64x64PDF.png"))
+                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"resources/icons/64x64PDF.png"))
             else:
                 newWidth = standard
                 self.mainWindow.ui.LabelCopyright.setVisible(False)
                 self.mainWindow.ui.btnImageRecognize.setText("")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"uiForms/Icons/64x64Image.png"))
+                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"resources/icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"uiForms/Icons/64x64PDF.png"))
+                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"resources/icons/64x64PDF.png"))
 
             # animation
             # this solution comes from WANDERSON M.PIMENTA project from his github
@@ -161,9 +161,6 @@ class UiFunction():
 
     def resizeWindow(self):
 
-        # TODO
-        # make frame on corner to resize window
-        # now it's not working correctly
         # this solution comes from WANDERSON M.PIMENTA project from his github
         self.mainWindow.sizegrip = QSizeGrip(self.mainWindow.ui.frameSizeGrip)
         self.mainWindow.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
@@ -172,13 +169,11 @@ class UiFunction():
         if self.mainWindow.ui.Pages.currentIndex() == 0:
             self.mainWindow.ui.plainTextEditFilePathImage.clear()
             self.mainWindow.ui.plainTextEditOutputImage.clear()
-            self.mainWindow.ui.previewImage.setPixmap(QPixmap(u"uiForms/Icons/128x128 Preview.png"))
-            self.mainWindow.ui.previewImage.setScaledContents(False)
+            self.mainWindow.queueToRecognize.clear()
         elif self.mainWindow.ui.Pages.currentIndex() == 1:
             self.mainWindow.ui.plainTextEditFilePathPDF.clear()
             self.mainWindow.ui.plainTextEditOutputPDF.clear()
-            self.mainWindow.ui.previewPDF.setPixmap(QPixmap(u"uiForms/Icons/128x128 Preview.png"))
-            self.mainWindow.ui.previewPDF.setScaledContents(False)
+            self.mainWindow.queueToRecognize.clear()
         self.mainWindow.listOfElementsToRecognize.clear()
         self.mainWindow.whichImage = 0
 

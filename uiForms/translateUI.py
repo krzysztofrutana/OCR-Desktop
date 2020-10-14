@@ -12,6 +12,7 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+import resources_rc
 
 class Ui_TranslateWindow(object):
     def setupUi(self, TranslateWindow):
@@ -411,7 +412,7 @@ class Ui_TranslateWindow(object):
 "background-color: rgb(85, 170, 255);\n"
 "}")
         icon = QIcon()
-        icon.addFile(u"Icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/content/resources/icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnSaveOnlyTranslate.setIcon(icon)
         self.btnSaveOnlyTranslate.setIconSize(QSize(35, 35))
         self.btnSaveOnlyTranslate.setAutoRepeat(False)

@@ -222,7 +222,7 @@ class ImageRecognizeFunction():
             progressDialog = uiFunction.progressBarDialog("Odczytywanie tekstu",
                                                           len(number))
             k = 0
-            progressDialog.setValue(k)
+            progressDialog.setValue(0)
             for i in number:
                 k = k+1
                 progressDialog.setValue(k)

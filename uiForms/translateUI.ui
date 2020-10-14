@@ -713,8 +713,8 @@ background-color: rgb(85, 170, 255);
                <string>   Zapisz tłumaczenie</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>Icons/cil-save.png</normaloff>Icons/cil-save.png</iconset>
+               <iconset resource="../resources.qrc">
+                <normaloff>:/content/resources/icons/cil-save.png</normaloff>:/content/resources/icons/cil-save.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -766,8 +766,8 @@ background-color: rgb(85, 170, 255);
                <string>   Zapisz oryginał i tłumaczenie</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>Icons/cil-save.png</normaloff>Icons/cil-save.png</iconset>
+               <iconset resource="../resources.qrc">
+                <normaloff>:/content/resources/icons/cil-save.png</normaloff>:/content/resources/icons/cil-save.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -791,6 +791,8 @@ background-color: rgb(85, 170, 255);
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

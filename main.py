@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
         self.ui.Pages.setCurrentIndex(0)
 
         uiStyle = UiStyle(self)
-        uiStyle.correctingIconsPathAndVisibleSettings()
+        uiStyle.correctingVisibleSettings()
 
         uiFunctions = UiFunction(self)
         uiFunctions.connectionsResizeDragingWindow()
@@ -81,6 +81,7 @@ class MainWindow(QMainWindow):
                 event.accept()
 
         self.ui.FrameTop.mouseMoveEvent = moveWindow
+
 
 
 if __name__ == "__main__":
