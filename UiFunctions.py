@@ -4,7 +4,7 @@ from PIL.ImageQt import ImageQt
 from PySide2 import QtCore
 from PySide2.QtCore import QPropertyAnimation, QSize, Qt
 from PySide2.QtGui import QIcon, QPixmap
-from PySide2.QtWidgets import QProgressDialog
+from PySide2.QtWidgets import QProgressDialog, QMessageBox
 
 from pytesseract import pytesseract
 
@@ -61,16 +61,12 @@ class UiFunction():
                 newWidth = maxExtend
                 self.mainWindow.ui.LabelCopyright.setVisible(True)
                 self.mainWindow.ui.btnImageRecognize.setText("  Rozpoznaj zdjęcie")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"uiForms/Icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("  Rozpoznaj PDF")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"uiForms/Icons/64x64PDF.png"))
             else:
                 newWidth = standard
                 self.mainWindow.ui.LabelCopyright.setVisible(False)
                 self.mainWindow.ui.btnImageRecognize.setText("")
-                self.mainWindow.ui.btnImageRecognize.setIcon(QIcon(u"uiForms/Icons/64x64Image.png"))
                 self.mainWindow.ui.btnPDFRecognize.setText("")
-                self.mainWindow.ui.btnPDFRecognize.setIcon(QIcon(u"uiForms/Icons/64x64PDF.png"))
 
             # animation
             # this solution comes from WANDERSON M.PIMENTA project from his github
@@ -161,9 +157,6 @@ class UiFunction():
 
     def resizeWindow(self):
 
-        # TODO
-        # make frame on corner to resize window
-        # now it's not working correctly
         # this solution comes from WANDERSON M.PIMENTA project from his github
         self.mainWindow.sizegrip = QSizeGrip(self.mainWindow.ui.frameSizeGrip)
         self.mainWindow.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
@@ -172,13 +165,11 @@ class UiFunction():
         if self.mainWindow.ui.Pages.currentIndex() == 0:
             self.mainWindow.ui.plainTextEditFilePathImage.clear()
             self.mainWindow.ui.plainTextEditOutputImage.clear()
-            self.mainWindow.ui.previewImage.setPixmap(QPixmap(u"uiForms/Icons/128x128 Preview.png"))
-            self.mainWindow.ui.previewImage.setScaledContents(False)
+            self.mainWindow.queueToRecognize.clear()
         elif self.mainWindow.ui.Pages.currentIndex() == 1:
             self.mainWindow.ui.plainTextEditFilePathPDF.clear()
             self.mainWindow.ui.plainTextEditOutputPDF.clear()
-            self.mainWindow.ui.previewPDF.setPixmap(QPixmap(u"uiForms/Icons/128x128 Preview.png"))
-            self.mainWindow.ui.previewPDF.setScaledContents(False)
+            self.mainWindow.queueToRecognize.clear()
         self.mainWindow.listOfElementsToRecognize.clear()
         self.mainWindow.whichImage = 0
 
@@ -188,5 +179,14 @@ class UiFunction():
 
 
     def showTranslateWindow(self, textToTranslate):
-
         self.mainWindow.badania = TranslateWindow(textToTranslate)
+
+    @staticmethod
+    def showErrorDialog(messege):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Warning)
+        msgBox.setText(str(messege))
+        msgBox.setWindowTitle("Błąd")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.setStyleSheet("background-color: rgb(40, 40, 40); color: rgb(255, 255, 255)")
+        msgBox.exec()

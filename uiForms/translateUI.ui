@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>855</width>
-    <height>580</height>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>855</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Tłumaczenie</string>
@@ -707,8 +713,8 @@ background-color: rgb(85, 170, 255);
                <string>   Zapisz tłumaczenie</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>Icons/cil-save.png</normaloff>Icons/cil-save.png</iconset>
+               <iconset resource="../resources.qrc">
+                <normaloff>:/content/resources/icons/cil-save.png</normaloff>:/content/resources/icons/cil-save.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -760,8 +766,8 @@ background-color: rgb(85, 170, 255);
                <string>   Zapisz oryginał i tłumaczenie</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>Icons/cil-save.png</normaloff>Icons/cil-save.png</iconset>
+               <iconset resource="../resources.qrc">
+                <normaloff>:/content/resources/icons/cil-save.png</normaloff>:/content/resources/icons/cil-save.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -785,6 +791,8 @@ background-color: rgb(85, 170, 255);
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

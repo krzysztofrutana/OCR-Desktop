@@ -14,8 +14,10 @@
 
 import sys
 
-from app_modules import *
+from PySide2 import QtGui
 
+from app_modules import *
+import ctypes
 try:
     from PIL import Image
 except ImportError:
@@ -48,7 +50,7 @@ class MainWindow(QMainWindow):
         self.ui.Pages.setCurrentIndex(0)
 
         uiStyle = UiStyle(self)
-        uiStyle.correctingIconsPathAndVisibleSettings()
+        uiStyle.correctingVisibleSettings()
 
         uiFunctions = UiFunction(self)
         uiFunctions.connectionsResizeDragingWindow()
@@ -83,9 +85,11 @@ class MainWindow(QMainWindow):
         self.ui.FrameTop.mouseMoveEvent = moveWindow
 
 
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
+    app.setWindowIcon(QtGui.QIcon('icon.ico'))
     window = MainWindow()
     window.show()
 
